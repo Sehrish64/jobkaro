@@ -7,7 +7,7 @@
 <meta name="description" content="JobKaro turns your own words — Urdu, Roman Urdu or English — into a tailored professional cover letter, resume and interview prep pack for every job you apply to. Free forever. Your data never leaves your browser.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Nastaliq+Urdu:wght@400;500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
     --ink:#0b1f3a;
@@ -59,12 +59,56 @@
   .brand-name{font-family:'Sora',sans-serif;font-weight:700;font-size:20px;color:var(--ink);line-height:1}
   .brand-name span{color:var(--accent)}
   .brand-sub{font-size:11.5px;color:var(--muted);letter-spacing:.02em;margin-top:3px}
+  .topbar-right{display:flex;align-items:center;gap:14px}
   .topbar-tags{display:flex;gap:8px}
   .tag{
     font-size:12px;font-weight:600;color:var(--ink-2);
     border:1px solid var(--line);border-radius:999px;padding:5px 12px;background:#fff;white-space:nowrap;
   }
   .tag b{color:var(--accent);font-weight:700}
+
+  /* ---------- Language toggle ---------- */
+  .lang-toggle{
+    display:flex;align-items:center;gap:2px;flex:none;
+    background:#fff;border:1.5px solid var(--line);border-radius:999px;padding:3px;
+  }
+  .lang-toggle button{
+    border:none;background:transparent;color:var(--muted);
+    font-size:13.5px;font-weight:600;line-height:1.2;
+    padding:7px 13px;border-radius:999px;transition:all .15s ease;white-space:nowrap;
+  }
+  .lang-toggle button:hover{color:var(--ink)}
+  .lang-toggle button.on{background:var(--ink);color:#fff;box-shadow:0 4px 10px -4px rgba(11,31,58,.45)}
+  .lang-toggle button[data-lang="ur"]{font-family:'Noto Nastaliq Urdu',serif;font-size:12.5px;padding-top:4px;padding-bottom:10px}
+  .lang-toggle button[data-lang="hi"]{font-family:'Noto Sans Devanagari','Inter',sans-serif}
+  .lang-note{
+    max-width:1080px;margin:0 auto;padding:0 24px 11px;
+    text-align:center;font-size:12.5px;color:var(--muted);font-weight:500;
+  }
+
+  /* ---------- Language fonts ---------- */
+  html[lang="ur"] body{font-family:'Noto Nastaliq Urdu','Inter',system-ui,serif;line-height:1.95}
+  html[lang="ur"] h1,html[lang="ur"] h2,html[lang="ur"] h3,html[lang="ur"] .display,
+  html[lang="ur"] .brand-name,html[lang="ur"] .step-num{font-family:'Noto Nastaliq Urdu',serif;letter-spacing:0}
+  html[lang="ur"] .hero h1{line-height:2.05;font-size:clamp(27px,4.4vw,42px)}
+  html[lang="ur"] .hero-in{padding-top:48px}
+  html[lang="ur"] h2{line-height:2}
+  html[lang="ur"] label .ur{line-height:2.1}
+  html[lang="ur"] .tag,html[lang="ur"] .eyebrow{line-height:2}
+  html[lang="ur"] .btn{line-height:1.9}
+  html[lang="ur"] .tab{line-height:1.9}
+  html[lang="ur"] .hero-sub,html[lang="ur"] .step-sub,html[lang="ur"] .hint,html[lang="ur"] .integrity p{line-height:2.1}
+  html[lang="ur"] input,html[lang="ur"] textarea,html[lang="ur"] select{font-family:'Noto Nastaliq Urdu','Inter',sans-serif}
+  html[lang="hi"] body{font-family:'Noto Sans Devanagari','Inter',system-ui,sans-serif}
+  html[lang="hi"] h1,html[lang="hi"] h2,html[lang="hi"] h3,html[lang="hi"] .display,html[lang="hi"] .brand-name{font-family:'Sora','Noto Sans Devanagari','Inter',sans-serif}
+
+  /* ---------- RTL: outputs + typing fields stay LTR/English ---------- */
+  [dir="rtl"] input,[dir="rtl"] textarea,[dir="rtl"] select{direction:ltr;text-align:left}
+  [dir="rtl"] .paper,[dir="rtl"] .sheet,[dir="rtl"] #outInterview,[dir="rtl"] #packInterview,[dir="rtl"] #printSheet{direction:ltr;text-align:left}
+  [dir="rtl"] .howstrip .arr{display:inline-block;transform:scaleX(-1)}
+  [dir="rtl"] .trust,[dir="rtl"] .integrity,[dir="rtl"] .step-head{text-align:right}
+  [dir="rtl"] .qa-item .h{padding-left:0;padding-right:38px}
+  [dir="rtl"] .sheet ul{padding-left:20px;padding-right:0}
 
   /* ---------- Hero ---------- */
   .hero{
@@ -80,6 +124,7 @@
     color:var(--accent-dark);background:var(--accent-soft);
     border:1px solid #cfe8dd;border-radius:999px;padding:7px 16px;
   }
+  html[lang="ur"] .eyebrow,html[lang="hi"] .eyebrow{letter-spacing:0;text-transform:none}
   .hero h1{font-size:clamp(34px,5.4vw,54px);font-weight:800;line-height:1.12;max-width:760px;margin:22px auto 0}
   .hero h1 .hl{color:var(--accent)}
   .hero-sub{font-size:clamp(16.5px,2.2vw,19px);color:var(--muted);max-width:620px;margin:18px auto 0;line-height:1.6}
@@ -88,6 +133,7 @@
     margin:38px auto 0;max-width:860px;
     display:grid;grid-template-columns:repeat(3,1fr);gap:14px;text-align:left;
   }
+  [dir="rtl"] .trust-row{text-align:right}
   .trust{
     display:flex;gap:12px;align-items:flex-start;background:#fff;border:1px solid var(--line);
     border-radius:14px;padding:16px 18px;box-shadow:var(--shadow);
@@ -135,7 +181,7 @@
   }
   .step h2{font-size:21px;font-weight:700;line-height:1.25}
   .step .step-sub{color:var(--muted);font-size:14.5px;margin-top:3px}
-  .saved-note{margin-left:auto;font-size:12.5px;color:var(--accent-dark);font-weight:600;white-space:nowrap;padding-top:10px;opacity:0;transition:opacity .3s}
+  .saved-note{margin-inline-start:auto;font-size:12.5px;color:var(--accent-dark);font-weight:600;white-space:nowrap;padding-top:10px;opacity:0;transition:opacity .3s}
   .saved-note.on{opacity:1}
 
   /* ---------- Forms ---------- */
@@ -169,6 +215,7 @@
     border:2.5px solid var(--accent-soft);border-top-color:var(--accent);border-radius:50%;
     animation:spin .8s linear infinite;
   }
+  [dir="rtl"] .spinner{margin-right:0;margin-left:8px}
   @keyframes spin{to{transform:rotate(360deg)}}
 
   /* ---------- Results ---------- */
@@ -244,6 +291,11 @@
   /* ---------- Responsive ---------- */
   @media (max-width:760px){
     .topbar-tags{display:none}
+    .topbar-in{padding:12px 16px;gap:10px}
+    .lang-note{padding:0 16px 10px}
+    .brand-name{font-size:18px}
+    .lang-toggle button{padding:6px 10px;font-size:12.5px}
+    .lang-toggle button[data-lang="ur"]{padding-top:3px;padding-bottom:9px}
     .hero-in{padding:44px 20px 40px}
     .trust-row{grid-template-columns:1fr}
     .wrap{padding:28px 16px 4px}
@@ -252,7 +304,7 @@
     .paper{padding:26px 22px}
     .sheet{padding:30px 24px}
     .step-head{flex-wrap:wrap}
-    .saved-note{margin-left:56px;padding-top:0}
+    .saved-note{margin-inline-start:56px;padding-top:0}
   }
 
   /* ---------- Print: only the print sheet ---------- */
@@ -261,7 +313,7 @@
     body{background:#fff}
     .topbar,.hero,.wrap,footer,#toast{display:none !important}
     #printSheet{
-      display:block;padding:0;
+      display:block;padding:0;direction:ltr;text-align:left;
       font-size:12.5pt;line-height:1.6;color:#1b2635;
     }
     #printSheet .sheet{box-shadow:none;border:none;max-width:none;padding:0}
@@ -278,41 +330,49 @@
       <div class="brand-mark">J</div>
       <div>
         <div class="brand-name">Job<span>Karo</span></div>
-        <div class="brand-sub">Apply with confidence</div>
+        <div class="brand-sub" data-i18n="brandSub">Apply with confidence</div>
       </div>
     </div>
-    <div class="topbar-tags">
-      <div class="tag"><b>Free</b>&nbsp;forever</div>
-      <div class="tag"><b>Private</b>&nbsp;by design</div>
-      <div class="tag"><b>Honest</b>&nbsp;AI writing</div>
+    <div class="topbar-right">
+      <div class="topbar-tags">
+        <div class="tag" data-i18n-html="tagFree"><b>Free</b>&nbsp;forever</div>
+        <div class="tag" data-i18n-html="tagPrivate"><b>Private</b>&nbsp;by design</div>
+        <div class="tag" data-i18n-html="tagHonest"><b>Honest</b>&nbsp;AI writing</div>
+      </div>
+      <div class="lang-toggle" role="group" aria-label="Interface language">
+        <button type="button" data-lang="en" class="on">EN</button>
+        <button type="button" data-lang="ur">اردو</button>
+        <button type="button" data-lang="hi">हिन्दी</button>
+      </div>
     </div>
   </div>
+  <div class="lang-note" data-i18n="packNote">Your application pack is always written in professional English.</div>
 </header>
 
 <section class="hero">
   <div class="hero-in">
-    <span class="eyebrow">From your words to professional English</span>
-    <h1>Your story, <span class="hl">professionally told</span> in English</h1>
-    <p class="hero-sub">Turn your Urdu and Roman Urdu notes into a polished cover letter, resume, and interview prep — tailored to every job you apply for.</p>
+    <span class="eyebrow" data-i18n="heroEyebrow">From your words to professional English</span>
+    <h1 data-i18n-html="heroH1">Your story, <span class="hl">professionally told</span> in English</h1>
+    <p class="hero-sub" data-i18n="heroSub">Turn your Urdu and Roman Urdu notes into a polished cover letter, resume, and interview prep — tailored to every job you apply for.</p>
     <div class="hero-cta">
       <button class="btn btn-primary" onclick="document.getElementById('step-profile').scrollIntoView({behavior:'smooth'})">
         <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
-        Start with your profile
+        <span data-i18n="ctaStart">Start with your profile</span>
       </button>
-      <button class="btn btn-ghost" onclick="document.getElementById('step-job').scrollIntoView({behavior:'smooth'})">I already have a job in mind</button>
+      <button class="btn btn-ghost" onclick="document.getElementById('step-job').scrollIntoView({behavior:'smooth'})"><span data-i18n="ctaHaveJob">I already have a job in mind</span></button>
     </div>
     <div class="trust-row">
       <div class="trust">
         <div class="trust-ic"><svg viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></svg></div>
-        <p>Free forever — no card, no catch<small>Har feature muft hai, hamesha ke liye.</small></p>
+        <p><span data-i18n="trust1T">Free forever — no card, no catch</span><small data-i18n="trust1S">Har feature muft hai, hamesha ke liye.</small></p>
       </div>
       <div class="trust">
         <div class="trust-ic"><svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></div>
-        <p>Your data never leaves your browser<small>Aap ki maloomat sirf aap ke phone/computer mein rehti hai.</small></p>
+        <p><span data-i18n="trust2T">Your data never leaves your browser</span><small data-i18n="trust2S">Aap ki maloomat sirf aap ke phone/computer mein rehti hai.</small></p>
       </div>
       <div class="trust">
         <div class="trust-ic"><svg viewBox="0 0 24 24"><path d="M12 22s8-3.6 8-10V5l-8-3-8 3v7c0 6.4 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></div>
-        <p>We only polish the facts you share<small>Jhoota tajurba kabhi nahi likha jata.</small></p>
+        <p><span data-i18n="trust3T">We only polish the facts you share</span><small data-i18n="trust3S">Jhoota tajurba kabhi nahi likha jata.</small></p>
       </div>
     </div>
   </div>
@@ -321,9 +381,9 @@
 <main class="wrap">
 
   <div class="howstrip">
-    <span><b>1.</b> Profile banao</span><span class="arr">&rarr;</span>
-    <span><b>2.</b> Job ki tafseel paste karo</span><span class="arr">&rarr;</span>
-    <span><b>3.</b> Apply Pack tayyar</span>
+    <span data-i18n-html="how1"><b>1.</b> Profile banao</span><span class="arr">&rarr;</span>
+    <span data-i18n-html="how2"><b>2.</b> Job ki tafseel paste karo</span><span class="arr">&rarr;</span>
+    <span data-i18n-html="how3"><b>3.</b> Apply Pack tayyar</span>
   </div>
 
   <!-- STEP 1 : PROFILE -->
@@ -331,43 +391,43 @@
     <div class="step-head">
       <div class="step-num">1</div>
       <div>
-        <h2>Your profile</h2>
-        <p class="step-sub">Ek dafa bhar dein — har job ke liye yehi profile istemal hogi. Urdu, Roman Urdu ya English, jis mein asaan lage.</p>
+        <h2 data-i18n="step1Title">Your profile</h2>
+        <p class="step-sub" data-i18n="step1Sub">Ek dafa bhar dein — har job ke liye yehi profile istemal hogi. Urdu, Roman Urdu ya English, jis mein asaan lage.</p>
       </div>
-      <div class="saved-note" id="savedNote">Profile saved</div>
+      <div class="saved-note" id="savedNote" data-i18n="savedNote">Profile saved</div>
     </div>
     <div class="grid">
       <div class="field">
-        <label for="f_name">Full name<span class="ur">Poora naam</span></label>
-        <input type="text" id="f_name" placeholder="e.g. Fatima Noor" autocomplete="name">
+        <label for="f_name"><span data-i18n="lblName">Full name</span><span class="ur" data-i18n="subName">Poora naam</span></label>
+        <input type="text" id="f_name" data-i18n-ph="phName" placeholder="e.g. Fatima Noor" autocomplete="name">
       </div>
       <div class="field">
-        <label for="f_city">City<span class="ur">Sheher</span></label>
-        <input type="text" id="f_city" placeholder="e.g. Karachi" autocomplete="address-level2">
+        <label for="f_city"><span data-i18n="lblCity">City</span><span class="ur" data-i18n="subCity">Sheher</span></label>
+        <input type="text" id="f_city" data-i18n-ph="phCity" placeholder="e.g. Karachi" autocomplete="address-level2">
       </div>
       <div class="field">
-        <label for="f_phone">Phone<span class="ur">Mobile number</span></label>
-        <input type="tel" id="f_phone" placeholder="e.g. 0300-1234567" autocomplete="tel">
+        <label for="f_phone"><span data-i18n="lblPhone">Phone</span><span class="ur" data-i18n="subPhone">Mobile number</span></label>
+        <input type="tel" id="f_phone" data-i18n-ph="phPhone" placeholder="e.g. 0300-1234567" autocomplete="tel">
       </div>
       <div class="field">
-        <label for="f_email">Email<span class="ur">Email address</span></label>
-        <input type="email" id="f_email" placeholder="e.g. fatima.noor@gmail.com" autocomplete="email">
+        <label for="f_email"><span data-i18n="lblEmail">Email</span><span class="ur" data-i18n="subEmail">Email address</span></label>
+        <input type="email" id="f_email" data-i18n-ph="phEmail" placeholder="e.g. fatima.noor@gmail.com" autocomplete="email">
       </div>
       <div class="field full">
-        <label for="f_title">Target job title<span class="ur">Kis qisam ki nokri chahiye?</span></label>
-        <input type="text" id="f_title" placeholder="e.g. Sales Officer, Office Assistant, Data Entry Operator">
+        <label for="f_title"><span data-i18n="lblTitle">Target job title</span><span class="ur" data-i18n="subTitle">Kis qisam ki nokri chahiye?</span></label>
+        <input type="text" id="f_title" data-i18n-ph="phTitle" placeholder="e.g. Sales Officer, Office Assistant, Data Entry Operator">
       </div>
       <div class="field full">
-        <label for="f_edu">Education<span class="ur">Taleem — degree, board/college, saal</span></label>
-        <textarea id="f_edu" rows="2" placeholder="e.g. Intermediate (Pre-Commerce), Karachi Board, 2022"></textarea>
+        <label for="f_edu"><span data-i18n="lblEdu">Education</span><span class="ur" data-i18n="subEdu">Taleem — degree, board/college, saal</span></label>
+        <textarea id="f_edu" rows="2" data-i18n-ph="phEdu" placeholder="e.g. Intermediate (Pre-Commerce), Karachi Board, 2022"></textarea>
       </div>
       <div class="field full">
-        <label for="f_exp">Experience<span class="ur">Tajurba — kahan kaam kiya, kya kaam tha. Agar koi tajurba nahi to &quot;Fresh graduate&quot; likh dein.</span></label>
-        <textarea id="f_exp" rows="4" placeholder="e.g. 2 saal ek dukaan par sales ka kaam kiya — customers ko samaan bechta tha, stock sambhalta tha, roz ka hisaab likhta tha."></textarea>
+        <label for="f_exp"><span data-i18n="lblExp">Experience</span><span class="ur" data-i18n="subExp">Tajurba — kahan kaam kiya, kya kaam tha. Agar koi tajurba nahi to &quot;Fresh graduate&quot; likh dein.</span></label>
+        <textarea id="f_exp" rows="4" data-i18n-ph="phExp" placeholder="e.g. 2 saal ek dukaan par sales ka kaam kiya — customers ko samaan bechta tha, stock sambhalta tha, roz ka hisaab likhta tha."></textarea>
       </div>
       <div class="field full">
-        <label for="f_skills">Skills<span class="ur">Maharat — jo kuch aata hai, saaf likhein</span></label>
-        <textarea id="f_skills" rows="2" placeholder="e.g. Customers se achi tarah baat kar leta hoon, cash handle kar leta hoon, MS Excel ki basic samajh hai, Urdu aur thodi English bol leta hoon."></textarea>
+        <label for="f_skills"><span data-i18n="lblSkills">Skills</span><span class="ur" data-i18n="subSkills">Maharat — jo kuch aata hai, saaf likhein</span></label>
+        <textarea id="f_skills" rows="2" data-i18n-ph="phSkills" placeholder="e.g. Customers se achi tarah baat kar leta hoon, cash handle kar leta hoon, MS Excel ki basic samajh hai, Urdu aur thodi English bol leta hoon."></textarea>
       </div>
     </div>
   </section>
@@ -377,21 +437,21 @@
     <div class="step-head">
       <div class="step-num">2</div>
       <div>
-        <h2>The job</h2>
-        <p class="step-sub">Jis nokri ke liye apply karna hai, us ki mukammal tafseel (job description) yahan paste karein — Rozee, LinkedIn ya WhatsApp forward, jahan se mili ho.</p>
+        <h2 data-i18n="step2Title">The job</h2>
+        <p class="step-sub" data-i18n="step2Sub">Jis nokri ke liye apply karna hai, us ki mukammal tafseel (job description) yahan paste karein — Rozee, LinkedIn ya WhatsApp forward, jahan se mili ho.</p>
       </div>
     </div>
     <div class="grid">
       <div class="field full">
-        <label for="f_jd">Job description<span class="ur">Nokri ki tafseel yahan paste karein</span></label>
-        <textarea id="f_jd" rows="7" placeholder="Paste the full job advertisement here — title, company, responsibilities and requirements."></textarea>
+        <label for="f_jd"><span data-i18n="lblJd">Job description</span><span class="ur" data-i18n="subJd">Nokri ki tafseel yahan paste karein</span></label>
+        <textarea id="f_jd" rows="7" data-i18n-ph="phJd" placeholder="Paste the full job advertisement here — title, company, responsibilities and requirements."></textarea>
       </div>
       <div class="field">
-        <label for="f_tone">Letter tone<span class="ur">Application ka lehja</span></label>
+        <label for="f_tone"><span data-i18n="lblTone">Letter tone</span><span class="ur" data-i18n="subTone">Application ka lehja</span></label>
         <select id="f_tone">
-          <option value="Formal">Formal — classic &amp; respectful</option>
-          <option value="Confident">Confident — strong &amp; assured</option>
-          <option value="Fresh Graduate">Fresh Graduate — eager &amp; honest</option>
+          <option value="Formal" data-i18n="toneFormal">Formal — classic &amp; respectful</option>
+          <option value="Confident" data-i18n="toneConfident">Confident — strong &amp; assured</option>
+          <option value="Fresh Graduate" data-i18n="toneFresh">Fresh Graduate — eager &amp; honest</option>
         </select>
       </div>
     </div>
@@ -402,23 +462,23 @@
     <div class="step-head">
       <div class="step-num">3</div>
       <div>
-        <h2>Generate your pack</h2>
-        <p class="step-sub">JobKaro ek free AI key se chalta hai jo seedha aap ke browser se kaam karti hai — hamara koi server beech mein nahi.</p>
+        <h2 data-i18n="step3Title">Generate your pack</h2>
+        <p class="step-sub" data-i18n="step3Sub">JobKaro ek free AI key se chalta hai jo seedha aap ke browser se kaam karti hai — hamara koi server beech mein nahi.</p>
       </div>
     </div>
     <div class="field" style="margin-top:14px">
-      <label for="f_key">Your free Mercury (Inception) API key<span class="ur">Apni muft API key — sirf aap ke browser mein mehfooz rehti hai</span></label>
+      <label for="f_key"><span data-i18n="lblKey">Your free Mercury (Inception) API key</span><span class="ur" data-i18n="subKey">Apni muft API key — sirf aap ke browser mein mehfooz rehti hai</span></label>
       <div class="key-row">
-        <input type="password" id="f_key" placeholder="Paste your API key here" autocomplete="off" spellcheck="false">
+        <input type="password" id="f_key" data-i18n-ph="phKey" placeholder="Paste your API key here" autocomplete="off" spellcheck="false">
         <button class="btn btn-ghost btn-small" id="btnKeyToggle" type="button">Show</button>
       </div>
       <div class="key-status" id="keyStatus"></div>
-      <p class="hint" style="margin-top:8px">Key nahi hai? <a href="https://platform.inceptionlabs.ai" target="_blank" rel="noopener">platform.inceptionlabs.ai</a> par muft account banayein — naye account ke saath <b>100 million free tokens</b> milte hain. Key wahan se copy karke yahan paste kar dein. Ye key is page ke bahir kahin nahi jati.</p>
+      <p class="hint" style="margin-top:8px" data-i18n-html="hintKey">Key nahi hai? <a href="https://platform.inceptionlabs.ai" target="_blank" rel="noopener">platform.inceptionlabs.ai</a> par muft account banayein — naye account ke saath <b>100 million free tokens</b> milte hain. Key wahan se copy karke yahan paste kar dein. Ye key is page ke bahir kahin nahi jati.</p>
     </div>
     <div class="generate-zone" style="margin-top:24px">
       <button class="btn btn-primary" id="btnGenerate">
         <svg viewBox="0 0 24 24"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19 15.5l.8 2.2L22 18.5l-2.2.8L19 21.5l-.8-2.2L16 18.5l2.2-.8z"/></svg>
-        Generate my pack
+        <span data-i18n="btnGenerate">Generate my pack</span>
       </button>
       <div class="gen-status" id="genStatus">Letter + Resume + Interview ke 10 sawal — ek click mein tayyar.</div>
     </div>
@@ -428,23 +488,23 @@
   <section id="results">
     <div class="integrity">
       <svg viewBox="0 0 24 24"><path d="M12 22s8-3.6 8-10V5l-8-3-8 3v7c0 6.4 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
-      <p>Every word we produce is built only from what you tell us — nothing invented, nothing padded. Bhejney se pehle ek dafa khud parh lein; jo baat aap ki nahi, wo yahan nahi milegi.</p>
+      <p data-i18n="integrity">Every word we produce is built only from what you tell us — nothing invented, nothing padded. Bhejney se pehle ek dafa khud parh lein; jo baat aap ki nahi, wo yahan nahi milegi.</p>
     </div>
 
     <div class="tabs" role="tablist">
-      <button class="tab active" data-tab="letter" role="tab">Cover Letter</button>
-      <button class="tab" data-tab="resume" role="tab">Resume</button>
-      <button class="tab" data-tab="interview" role="tab">Interview Prep</button>
-      <button class="tab" data-tab="pack" role="tab">Apply Pack</button>
+      <button class="tab active" data-tab="letter" role="tab" data-i18n="tabLetter">Cover Letter</button>
+      <button class="tab" data-tab="resume" role="tab" data-i18n="tabResume">Resume</button>
+      <button class="tab" data-tab="interview" role="tab" data-i18n="tabInterview">Interview Prep</button>
+      <button class="tab" data-tab="pack" role="tab" data-i18n="tabPack">Apply Pack</button>
     </div>
 
     <div class="panel active" id="panel-letter">
       <div class="panel-actions">
-        <button class="btn btn-ghost btn-small" onclick="copyText(state.letter,'Cover letter copy ho gaya')">
-          <svg viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>Copy letter
+        <button class="btn btn-ghost btn-small" onclick="copyText(state.letter,'toastLetter')">
+          <svg viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span data-i18n="btnCopyLetter">Copy letter</span>
         </button>
         <button class="btn btn-ghost btn-small" onclick="printLetter()">
-          <svg viewBox="0 0 24 24"><path d="M6 9V3h12v6"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="7"/></svg>Print letter
+          <svg viewBox="0 0 24 24"><path d="M6 9V3h12v6"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="7"/></svg><span data-i18n="btnPrintLetter">Print letter</span>
         </button>
       </div>
       <div class="paper" id="outLetter"></div>
@@ -453,38 +513,38 @@
     <div class="panel" id="panel-resume">
       <div class="panel-actions">
         <button class="btn btn-ghost btn-small" onclick="printResume()">
-          <svg viewBox="0 0 24 24"><path d="M6 9V3h12v6"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="7"/></svg>Print / Save as PDF
+          <svg viewBox="0 0 24 24"><path d="M6 9V3h12v6"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="7"/></svg><span data-i18n="btnPrintResume">Print / Save as PDF</span>
         </button>
-        <button class="btn btn-ghost btn-small" onclick="copyText(resumeText(),'Resume ka text copy ho gaya')">Copy resume text</button>
+        <button class="btn btn-ghost btn-small" onclick="copyText(resumeText(),'toastResume')"><span data-i18n="btnCopyResume">Copy resume text</span></button>
       </div>
       <div class="sheet" id="outResume"></div>
     </div>
 
     <div class="panel" id="panel-interview">
       <div class="panel-actions">
-        <button class="btn btn-ghost btn-small" onclick="copyText(interviewText(),'Interview sawal copy ho gaye')">Copy questions</button>
+        <button class="btn btn-ghost btn-small" onclick="copyText(interviewText(),'toastQuestions')"><span data-i18n="btnCopyQuestions">Copy questions</span></button>
       </div>
       <div id="outInterview"></div>
     </div>
 
     <div class="panel" id="panel-pack">
       <div class="panel-actions">
-        <button class="btn btn-primary btn-small" onclick="copyText(packText(),'Poora Apply Pack copy ho gaya')">Copy full pack</button>
+        <button class="btn btn-primary btn-small" onclick="copyText(packText(),'toastPack')"><span data-i18n="btnCopyPack">Copy full pack</span></button>
         <button class="btn btn-whatsapp btn-small" onclick="shareWhatsApp()">
-          <svg viewBox="0 0 24 24"><path d="M21 11.5a8.5 8.5 0 0 1-12.4 7.6L3 21l1.9-5.4A8.5 8.5 0 1 1 21 11.5z"/></svg>Share on WhatsApp
+          <svg viewBox="0 0 24 24"><path d="M21 11.5a8.5 8.5 0 0 1-12.4 7.6L3 21l1.9-5.4A8.5 8.5 0 1 1 21 11.5z"/></svg><span data-i18n="btnWhatsApp">Share on WhatsApp</span>
         </button>
-        <button class="btn btn-ghost btn-small" onclick="printPack()">Print pack</button>
+        <button class="btn btn-ghost btn-small" onclick="printPack()"><span data-i18n="btnPrintPack">Print pack</span></button>
       </div>
-      <div class="pack-block"><h3>Cover Letter</h3><div class="paper" id="packLetter"></div></div>
-      <div class="pack-block"><h3>Resume</h3><div class="sheet" id="packResume"></div></div>
-      <div class="pack-block"><h3>Interview Prep — 10 likely questions</h3><div id="packInterview"></div></div>
+      <div class="pack-block"><h3 data-i18n="packHLetter">Cover Letter</h3><div class="paper" id="packLetter"></div></div>
+      <div class="pack-block"><h3 data-i18n="packHResume">Resume</h3><div class="sheet" id="packResume"></div></div>
+      <div class="pack-block"><h3 data-i18n="packHInterview">Interview Prep — 10 likely questions</h3><div id="packInterview"></div></div>
     </div>
   </section>
 
 </main>
 
 <footer>
-  <p class="f-line"><b>JobKaro</b> — a free tool by Sehrish Creates. Aap ki maloomat, profile aur key sirf aap ke browser mein rehti hai; hamaray paas koi copy nahi aati. Letter bhejne se pehle hamesha khud parh lein.</p>
+  <p class="f-line" data-i18n-html="footerLine"><b>JobKaro</b> — a free tool by Sehrish Creates. Aap ki maloomat, profile aur key sirf aap ke browser mein rehti hai; hamaray paas koi copy nahi aati. Letter bhejne se pehle hamesha khud parh lein.</p>
 </footer>
 
 <div id="toast"></div>
@@ -498,6 +558,271 @@
   var MODEL = "mercury-3";
 
   var state = { letter:"", summary:"", bullets:[], skillsLine:"", interview:[] };
+
+  /* ---------------- i18n ----------------
+     Interface language only. Generated outputs (letter, resume, interview
+     pack) are ALWAYS professional English — the prompts below never change. */
+  var I18N = {
+    en: {
+      brandSub:"Apply with confidence",
+      tagFree:"<b>Free</b>&nbsp;forever",
+      tagPrivate:"<b>Private</b>&nbsp;by design",
+      tagHonest:"<b>Honest</b>&nbsp;AI writing",
+      packNote:"Your application pack is always written in professional English.",
+      heroEyebrow:"From your words to professional English",
+      heroH1:"Your story, <span class=\"hl\">professionally told</span> in English",
+      heroSub:"Turn your Urdu and Roman Urdu notes into a polished cover letter, resume, and interview prep — tailored to every job you apply for.",
+      ctaStart:"Start with your profile",
+      ctaHaveJob:"I already have a job in mind",
+      trust1T:"Free forever — no card, no catch",
+      trust1S:"Har feature muft hai, hamesha ke liye.",
+      trust2T:"Your data never leaves your browser",
+      trust2S:"Aap ki maloomat sirf aap ke phone/computer mein rehti hai.",
+      trust3T:"We only polish the facts you share",
+      trust3S:"Jhoota tajurba kabhi nahi likha jata.",
+      how1:"<b>1.</b> Profile banao",
+      how2:"<b>2.</b> Job ki tafseel paste karo",
+      how3:"<b>3.</b> Apply Pack tayyar",
+      step1Title:"Your profile",
+      step1Sub:"Ek dafa bhar dein — har job ke liye yehi profile istemal hogi. Urdu, Roman Urdu ya English, jis mein asaan lage.",
+      savedNote:"Profile saved",
+      lblName:"Full name", subName:"Poora naam", phName:"e.g. Fatima Noor",
+      lblCity:"City", subCity:"Sheher", phCity:"e.g. Karachi",
+      lblPhone:"Phone", subPhone:"Mobile number", phPhone:"e.g. 0300-1234567",
+      lblEmail:"Email", subEmail:"Email address", phEmail:"e.g. fatima.noor@gmail.com",
+      lblTitle:"Target job title", subTitle:"Kis qisam ki nokri chahiye?", phTitle:"e.g. Sales Officer, Office Assistant, Data Entry Operator",
+      lblEdu:"Education", subEdu:"Taleem — degree, board/college, saal", phEdu:"e.g. Intermediate (Pre-Commerce), Karachi Board, 2022",
+      lblExp:"Experience", subExp:"Tajurba — kahan kaam kiya, kya kaam tha. Agar koi tajurba nahi to \"Fresh graduate\" likh dein.",
+      phExp:"e.g. 2 saal ek dukaan par sales ka kaam kiya — customers ko samaan bechta tha, stock sambhalta tha, roz ka hisaab likhta tha.",
+      lblSkills:"Skills", subSkills:"Maharat — jo kuch aata hai, saaf likhein",
+      phSkills:"e.g. Customers se achi tarah baat kar leta hoon, cash handle kar leta hoon, MS Excel ki basic samajh hai, Urdu aur thodi English bol leta hoon.",
+      step2Title:"The job",
+      step2Sub:"Jis nokri ke liye apply karna hai, us ki mukammal tafseel (job description) yahan paste karein — Rozee, LinkedIn ya WhatsApp forward, jahan se mili ho.",
+      lblJd:"Job description", subJd:"Nokri ki tafseel yahan paste karein",
+      phJd:"Paste the full job advertisement here — title, company, responsibilities and requirements.",
+      lblTone:"Letter tone", subTone:"Application ka lehja",
+      toneFormal:"Formal — classic & respectful",
+      toneConfident:"Confident — strong & assured",
+      toneFresh:"Fresh Graduate — eager & honest",
+      step3Title:"Generate your pack",
+      step3Sub:"JobKaro ek free AI key se chalta hai jo seedha aap ke browser se kaam karti hai — hamara koi server beech mein nahi.",
+      lblKey:"Your free Mercury (Inception) API key", subKey:"Apni muft API key — sirf aap ke browser mein mehfooz rehti hai",
+      phKey:"Paste your API key here",
+      btnShow:"Show", btnHide:"Hide",
+      hintKey:"Key nahi hai? <a href=\"https://platform.inceptionlabs.ai\" target=\"_blank\" rel=\"noopener\">platform.inceptionlabs.ai</a> par muft account banayein — naye account ke saath <b>100 million free tokens</b> milte hain. Key wahan se copy karke yahan paste kar dein. Ye key is page ke bahir kahin nahi jati.",
+      keyOk:"Key mehfooz hai — sirf is browser mein save hai.",
+      keyPartial:"Key mukammal nahi lagti — poori key paste karein.",
+      btnGenerate:"Generate my pack",
+      genDefault:"Letter + Resume + Interview ke 10 sawal — ek click mein tayyar.",
+      integrity:"Every word we produce is built only from what you tell us — nothing invented, nothing padded. Bhejney se pehle ek dafa khud parh lein; jo baat aap ki nahi, wo yahan nahi milegi.",
+      tabLetter:"Cover Letter", tabResume:"Resume", tabInterview:"Interview Prep", tabPack:"Apply Pack",
+      btnCopyLetter:"Copy letter", btnPrintLetter:"Print letter", btnPrintResume:"Print / Save as PDF",
+      btnCopyResume:"Copy resume text", btnCopyQuestions:"Copy questions", btnCopyPack:"Copy full pack",
+      btnWhatsApp:"Share on WhatsApp", btnPrintPack:"Print pack",
+      packHLetter:"Cover Letter", packHResume:"Resume", packHInterview:"Interview Prep — 10 likely questions",
+      footerLine:"<b>JobKaro</b> — a free tool by Sehrish Creates. Aap ki maloomat, profile aur key sirf aap ke browser mein rehti hai; hamaray paas koi copy nahi aati. Letter bhejne se pehle hamesha khud parh lein.",
+      toastLetter:"Cover letter copy ho gaya",
+      toastResume:"Resume ka text copy ho gaya",
+      toastQuestions:"Interview sawal copy ho gaye",
+      toastPack:"Poora Apply Pack copy ho gaya",
+      toastNeedGenerate:"Pehle Generate karein — abhi kuch copy karne ko nahi",
+      toastCopied:"Copy ho gaya",
+      toastCopyFail:"Copy nahi ho saka — text select karke khud copy karein",
+      toastPackReady:"Apply Pack tayyar hai",
+      interviewEmpty:"Sawal tayyar nahi ho sake — dobara Generate karke dekhein.",
+      errName:"Pehle Step 1 mein apna naam aur profile bhar dein.",
+      errProfile:"Profile mein tajurba ya skills likhna zaroori hai — baghair maloomat ke letter nahi ban sakta.",
+      errJd:"Step 2 mein nokri ki mukammal tafseel paste karein — itni kam maloomat par tailored letter nahi bane ga.",
+      errKeyMissing:"Step 3 mein apni muft API key paste karein — baghair key ke AI nahi chal sakta.",
+      progLetter:"Cover letter tayyar ho raha hai...",
+      progResume:"Resume tayyar ho raha hai...",
+      progInterview:"Interview ke sawal tayyar ho rahe hain...",
+      stepOf:"Step {n} of 3 — ",
+      doneStatus:"Aap ka Apply Pack tayyar hai — neeche teenon cheezein dekh lein.",
+      errKey:"API key ghalat lagti hai — key dobara check karke paste karein. (Error {status})",
+      errQuota:"Aaj ki muft limit khatam ho gayi lagti hai — kuch der baad ya kal phir koshish karein. (Error 429)",
+      errServer:"Server ne jawab nahi diya (Error {status}) — thori der baad phir koshish karein.",
+      errEmpty:"AI se khaali jawab aya — ek dafa phir Generate dabayein.",
+      errTimeout:"Jawab aane mein bohat der lag gayi — internet check karke phir koshish karein.",
+      errConn:"Server se rabta nahi ho saka — internet connection check karein. Agar internet theek hai to thori der baad phir koshish karein.",
+      errGeneric:"Kuch ghalat ho gaya — phir koshish karein."
+    },
+    ur: {
+      brandSub:"اعتماد کے ساتھ اپلائی کریں",
+      tagFree:"<b>مفت</b>&nbsp;ہمیشہ کے لیے",
+      tagPrivate:"<b>محفوظ</b>&nbsp;اور نجی",
+      tagHonest:"<b>ایماندارانہ</b>&nbsp;AI تحریر",
+      packNote:"آپ کا اپلیکیشن پیک ہمیشہ پیشہ ورانہ انگریزی میں لکھا جاتا ہے۔",
+      heroEyebrow:"آپ کے الفاظ سے پیشہ ورانہ انگریزی تک",
+      heroH1:"آپ کی کہانی، <span class=\"hl\">پیشہ ورانہ انداز میں</span> انگریزی میں",
+      heroSub:"اپنی اردو اور رومن اردو معلومات کو ایک شاندار کور لیٹر، ریزیومے اور انٹرویو کی مکمل تیاری میں بدلیں — ہر اس نوکری کے لیے خاص تیار، جس کے لیے آپ اپلائی کریں۔",
+      ctaStart:"اپنی پروفائل سے شروع کریں",
+      ctaHaveJob:"میرے ذہن میں پہلے سے نوکری ہے",
+      trust1T:"ہمیشہ مفت — نہ کارڈ، نہ کوئی شرط",
+      trust1S:"ہر فیچر مفت ہے، ہمیشہ کے لیے۔",
+      trust2T:"آپ کا ڈیٹا آپ کے براؤزر سے باہر نہیں جاتا",
+      trust2S:"آپ کی معلومات صرف آپ کے فون یا کمپیوٹر میں رہتی ہے۔",
+      trust3T:"ہم صرف آپ کے بتائے ہوئے حقائق کو نکھارتے ہیں",
+      trust3S:"جھوٹا تجربہ کبھی نہیں لکھا جاتا۔",
+      how1:"<b>1۔</b> پروفائل بنائیں",
+      how2:"<b>2۔</b> نوکری کی تفصیل پیسٹ کریں",
+      how3:"<b>3۔</b> اپلائی پیک تیار",
+      step1Title:"آپ کی پروفائل",
+      step1Sub:"ایک بار بھر دیں — ہر نوکری کے لیے یہی پروفائل استعمال ہوگی۔ اردو، رومن اردو یا انگریزی، جس میں آسان لگے۔",
+      savedNote:"پروفائل محفوظ ہو گئی",
+      lblName:"پورا نام", subName:"آپ کا مکمل نام", phName:"مثلاً فاطمہ نور",
+      lblCity:"شہر", subCity:"آپ کس شہر میں رہتے ہیں؟", phCity:"مثلاً کراچی",
+      lblPhone:"فون", subPhone:"موبائل نمبر", phPhone:"0300-1234567 مثلاً",
+      lblEmail:"ای میل", subEmail:"ای میل ایڈریس", phEmail:"fatima.noor@gmail.com مثلاً",
+      lblTitle:"مطلوبہ نوکری کا عنوان", subTitle:"کس قسم کی نوکری چاہیے؟", phTitle:"مثلاً سیلز آفیسر، آفس اسسٹنٹ، ڈیٹا انٹری آپریٹر",
+      lblEdu:"تعلیم", subEdu:"ڈگری، بورڈ یا کالج، اور سال", phEdu:"مثلاً انٹرمیڈیٹ (پری کامرس)، کراچی بورڈ، 2022",
+      lblExp:"تجربہ", subExp:"کہاں کام کیا، کیا کام تھا۔ اگر کوئی تجربہ نہیں تو «Fresh graduate» لکھ دیں۔",
+      phExp:"مثلاً 2 سال ایک دکان پر سیلز کا کام کیا — گاہکوں کو سامان بیچتا تھا، اسٹاک سنبھالتا تھا، روز کا حساب لکھتا تھا۔",
+      lblSkills:"مہارت", subSkills:"جو کچھ آتا ہے، صاف لکھیں",
+      phSkills:"مثلاً گاہکوں سے اچھی طرح بات کر لیتا ہوں، کیش سنبھال لیتا ہوں، ایم ایس ایکسل کی بنیادی سمجھ ہے، اردو اور تھوڑی انگریزی بول لیتا ہوں۔",
+      step2Title:"نوکری",
+      step2Sub:"جس نوکری کے لیے اپلائی کرنا ہے، اس کی مکمل تفصیل (جاب ڈسکرپشن) یہاں پیسٹ کریں — روزی، لنکڈ اِن یا واٹس ایپ فارورڈ، جہاں سے بھی ملی ہو۔",
+      lblJd:"نوکری کی تفصیل", subJd:"نوکری کی تفصیل یہاں پیسٹ کریں",
+      phJd:"مکمل نوکری کا اشتہار یہاں پیسٹ کریں — عنوان، کمپنی، ذمہ داریاں اور شرائط۔",
+      lblTone:"خط کا لہجہ", subTone:"اپلیکیشن کا انداز",
+      toneFormal:"رسمی — کلاسیکی اور مؤدبانہ",
+      toneConfident:"پراعتماد — مضبوط اور پرعزم",
+      toneFresh:"فریش گریجویٹ — شوقین اور ایماندار",
+      step3Title:"اپنا پیک بنائیں",
+      step3Sub:"JobKaro ایک مفت AI کی سے چلتا ہے جو سیدھا آپ کے براؤزر سے کام کرتی ہے — ہمارا کوئی سرور درمیان میں نہیں۔",
+      lblKey:"آپ کی مفت Mercury (Inception) API کی", subKey:"آپ کی مفت API کی — صرف آپ کے براؤزر میں محفوظ رہتی ہے",
+      phKey:"اپنی API کی یہاں پیسٹ کریں",
+      btnShow:"دکھائیں", btnHide:"چھپائیں",
+      hintKey:"کی نہیں ہے؟ <a href=\"https://platform.inceptionlabs.ai\" target=\"_blank\" rel=\"noopener\">platform.inceptionlabs.ai</a> پر مفت اکاؤنٹ بنائیں — نئے اکاؤنٹ کے ساتھ <b>100 ملین مفت ٹوکنز</b> ملتے ہیں۔ کی وہاں سے کاپی کر کے یہاں پیسٹ کر دیں۔ یہ کی اس صفحے سے باہر کہیں نہیں جاتی۔",
+      keyOk:"کی محفوظ ہے — صرف اس براؤزر میں محفوظ ہے۔",
+      keyPartial:"کی مکمل نہیں لگتی — پوری کی پیسٹ کریں۔",
+      btnGenerate:"میرا پیک بنائیں",
+      genDefault:"لیٹر + ریزیومے + انٹرویو کے 10 سوالات — ایک کلک میں تیار۔",
+      integrity:"ہم جو کچھ بھی لکھتے ہیں، وہ صرف آپ کی بتائی ہوئی معلومات سے بنتا ہے — نہ کچھ ایجاد کیا جاتا ہے، نہ بڑھایا جاتا ہے۔ بھیجنے سے پہلے ایک بار خود پڑھ لیں؛ جو بات آپ کی نہیں، وہ یہاں نہیں ملے گی۔",
+      tabLetter:"کور لیٹر", tabResume:"ریزیومے", tabInterview:"انٹرویو کی تیاری", tabPack:"اپلائی پیک",
+      btnCopyLetter:"لیٹر کاپی کریں", btnPrintLetter:"لیٹر پرنٹ کریں", btnPrintResume:"پرنٹ کریں / PDF محفوظ کریں",
+      btnCopyResume:"ریزیومے کا متن کاپی کریں", btnCopyQuestions:"سوالات کاپی کریں", btnCopyPack:"پورا پیک کاپی کریں",
+      btnWhatsApp:"واٹس ایپ پر شیئر کریں", btnPrintPack:"پیک پرنٹ کریں",
+      packHLetter:"کور لیٹر", packHResume:"ریزیومے", packHInterview:"انٹرویو کی تیاری — 10 ممکنہ سوالات",
+      footerLine:"<b>JobKaro</b> — Sehrish Creates کا ایک مفت ٹول۔ آپ کی معلومات، پروفائل اور کی صرف آپ کے براؤزر میں رہتی ہے؛ ہمارے پاس کوئی کاپی نہیں آتی۔ خط بھیجنے سے پہلے ہمیشہ خود پڑھ لیں۔",
+      toastLetter:"کور لیٹر کاپی ہو گیا",
+      toastResume:"ریزیومے کا متن کاپی ہو گیا",
+      toastQuestions:"انٹرویو کے سوالات کاپی ہو گئے",
+      toastPack:"پورا اپلائی پیک کاپی ہو گیا",
+      toastNeedGenerate:"پہلے Generate کریں — ابھی کاپی کرنے کو کچھ نہیں",
+      toastCopied:"کاپی ہو گیا",
+      toastCopyFail:"کاپی نہیں ہو سکا — متن منتخب کر کے خود کاپی کریں",
+      toastPackReady:"اپلائی پیک تیار ہے",
+      interviewEmpty:"سوالات تیار نہیں ہو سکے — دوبارہ Generate کر کے دیکھیں۔",
+      errName:"پہلے مرحلہ 1 میں اپنا نام اور پروفائل بھر دیں۔",
+      errProfile:"پروفائل میں تجربہ یا مہارت لکھنا ضروری ہے — معلومات کے بغیر خط نہیں بن سکتا۔",
+      errJd:"مرحلہ 2 میں نوکری کی مکمل تفصیل پیسٹ کریں — اتنی کم معلومات پر مخصوص خط نہیں بنے گا۔",
+      errKeyMissing:"مرحلہ 3 میں اپنی مفت API کی پیسٹ کریں — کی کے بغیر AI نہیں چل سکتا۔",
+      progLetter:"کور لیٹر تیار ہو رہا ہے...",
+      progResume:"ریزیومے تیار ہو رہا ہے...",
+      progInterview:"انٹرویو کے سوالات تیار ہو رہے ہیں...",
+      stepOf:"مرحلہ {n} از 3 — ",
+      doneStatus:"آپ کا اپلائی پیک تیار ہے — نیچے تینوں چیزیں دیکھ لیں۔",
+      errKey:"API کی غلط لگتی ہے — کی دوبارہ جانچ کر پیسٹ کریں۔ (Error {status})",
+      errQuota:"آج کی مفت حد ختم ہو گئی لگتی ہے — کچھ دیر بعد یا کل پھر کوشش کریں۔ (Error 429)",
+      errServer:"سرور نے جواب نہیں دیا (Error {status}) — تھوڑی دیر بعد پھر کوشش کریں۔",
+      errEmpty:"AI سے خالی جواب آیا — ایک بار پھر Generate دبائیں۔",
+      errTimeout:"جواب آنے میں بہت دیر لگ گئی — انٹرنیٹ جانچ کر پھر کوشش کریں۔",
+      errConn:"سرور سے رابطہ نہیں ہو سکا — انٹرنیٹ کنکشن جانچیں۔ اگر انٹرنیٹ ٹھیک ہے تو تھوڑی دیر بعد پھر کوشش کریں۔",
+      errGeneric:"کچھ غلط ہو گیا — پھر کوشش کریں۔"
+    },
+    hi: {
+      brandSub:"आत्मविश्वास के साथ आवेदन करें",
+      tagFree:"<b>मुफ़्त</b>&nbsp;हमेशा के लिए",
+      tagPrivate:"<b>निजी</b>&nbsp;डिज़ाइन से",
+      tagHonest:"<b>ईमानदार</b>&nbsp;AI लेखन",
+      packNote:"आपका आवेदन पैक हमेशा पेशेवर अंग्रेज़ी में ही लिखा जाता है।",
+      heroEyebrow:"आपके शब्दों से पेशेवर अंग्रेज़ी तक",
+      heroH1:"आपकी कहानी, <span class=\"hl\">पेशेवर अंदाज़ में</span> अंग्रेज़ी में",
+      heroSub:"अपनी उर्दू और रोमन उर्दू जानकारी को एक शानदार कवर लेटर, रिज़्यूमे और इंटरव्यू की तैयारी में बदलें — हर नौकरी के लिए ख़ास तौर पर तैयार, जिसके लिए आप आवेदन करें।",
+      ctaStart:"अपनी प्रोफ़ाइल से शुरू करें",
+      ctaHaveJob:"मेरे मन में पहले से नौकरी है",
+      trust1T:"हमेशा मुफ़्त — न कार्ड, न कोई शर्त",
+      trust1S:"हर फ़ीचर मुफ़्त है, हमेशा के लिए।",
+      trust2T:"आपका डेटा आपके ब्राउज़र से बाहर नहीं जाता",
+      trust2S:"आपकी जानकारी सिर्फ़ आपके फ़ोन या कंप्यूटर में रहती है।",
+      trust3T:"हम सिर्फ़ आपके बताए तथ्यों को निखारते हैं",
+      trust3S:"झूठा अनुभव कभी नहीं लिखा जाता।",
+      how1:"<b>1.</b> प्रोफ़ाइल बनाएँ",
+      how2:"<b>2.</b> नौकरी का विवरण पेस्ट करें",
+      how3:"<b>3.</b> अप्लाई पैक तैयार",
+      step1Title:"आपकी प्रोफ़ाइल",
+      step1Sub:"एक बार भर दें — हर नौकरी के लिए यही प्रोफ़ाइल इस्तेमाल होगी। उर्दू, रोमन उर्दू या अंग्रेज़ी, जिसमें आसान लगे।",
+      savedNote:"प्रोफ़ाइल सहेजी गई",
+      lblName:"पूरा नाम", subName:"आपका पूरा नाम", phName:"जैसे फ़ातिमा नूर",
+      lblCity:"शहर", subCity:"आप किस शहर में रहते हैं?", phCity:"जैसे कराची",
+      lblPhone:"फ़ोन", subPhone:"मोबाइल नंबर", phPhone:"जैसे 0300-1234567",
+      lblEmail:"ईमेल", subEmail:"ईमेल पता", phEmail:"जैसे fatima.noor@gmail.com",
+      lblTitle:"मनचाही नौकरी का पद", subTitle:"किस तरह की नौकरी चाहिए?", phTitle:"जैसे सेल्स अफ़सर, ऑफ़िस असिस्टेंट, डेटा एंट्री ऑपरेटर",
+      lblEdu:"शिक्षा", subEdu:"डिग्री, बोर्ड या कॉलेज, और वर्ष", phEdu:"जैसे इंटरमीडिएट (प्री-कॉमर्स), कराची बोर्ड, 2022",
+      lblExp:"अनुभव", subExp:"कहाँ काम किया, क्या काम था। अगर कोई अनुभव नहीं तो \"Fresh graduate\" लिख दें।",
+      phExp:"जैसे 2 साल एक दुकान पर सेल्स का काम किया — ग्राहकों को सामान बेचता था, स्टॉक संभालता था, रोज़ का हिसाब लिखता था।",
+      lblSkills:"कौशल", subSkills:"जो कुछ आता है, साफ़ लिखें",
+      phSkills:"जैसे ग्राहकों से अच्छी तरह बात कर लेता हूँ, कैश संभाल लेता हूँ, MS Excel की बुनियादी समझ है, उर्दू और थोड़ी अंग्रेज़ी बोल लेता हूँ।",
+      step2Title:"नौकरी",
+      step2Sub:"जिस नौकरी के लिए आवेदन करना है, उसका पूरा विवरण (जॉब डिस्क्रिप्शन) यहाँ पेस्ट करें — Rozee, LinkedIn या WhatsApp फ़ॉरवर्ड, जहाँ से भी मिला हो।",
+      lblJd:"नौकरी का विवरण", subJd:"नौकरी का विवरण यहाँ पेस्ट करें",
+      phJd:"नौकरी का पूरा विज्ञापन यहाँ पेस्ट करें — पद, कंपनी, ज़िम्मेदारियाँ और शर्तें।",
+      lblTone:"पत्र का लहजा", subTone:"आवेदन का अंदाज़",
+      toneFormal:"फ़ॉर्मल — क्लासिक और सम्मानजनक",
+      toneConfident:"आत्मविश्वासी — मज़बूत और दृढ़",
+      toneFresh:"फ्रेश ग्रेजुएट — उत्साही और ईमानदार",
+      step3Title:"अपना पैक बनाएँ",
+      step3Sub:"JobKaro एक मुफ़्त AI कुंजी से चलता है जो सीधे आपके ब्राउज़र से काम करती है — हमारा कोई सर्वर बीच में नहीं।",
+      lblKey:"आपकी मुफ़्त Mercury (Inception) API कुंजी", subKey:"आपकी मुफ़्त API कुंजी — सिर्फ़ आपके ब्राउज़र में सुरक्षित रहती है",
+      phKey:"अपनी API कुंजी यहाँ पेस्ट करें",
+      btnShow:"दिखाएँ", btnHide:"छिपाएँ",
+      hintKey:"कुंजी नहीं है? <a href=\"https://platform.inceptionlabs.ai\" target=\"_blank\" rel=\"noopener\">platform.inceptionlabs.ai</a> पर मुफ़्त खाता बनाएँ — नए खाते के साथ <b>100 मिलियन मुफ़्त टोकन</b> मिलते हैं। कुंजी वहाँ से कॉपी करके यहाँ पेस्ट कर दें। यह कुंजी इस पेज के बाहर कहीं नहीं जाती।",
+      keyOk:"कुंजी सुरक्षित है — सिर्फ़ इसी ब्राउज़र में सहेजी है।",
+      keyPartial:"कुंजी पूरी नहीं लगती — पूरी कुंजी पेस्ट करें।",
+      btnGenerate:"मेरा पैक बनाएँ",
+      genDefault:"लेटर + रिज़्यूमे + इंटरव्यू के 10 सवाल — एक क्लिक में तैयार।",
+      integrity:"हम जो कुछ भी लिखते हैं, वह सिर्फ़ आपकी बताई जानकारी से बनता है — न कुछ गढ़ा जाता है, न बढ़ाया जाता है। भेजने से पहले एक बार ख़ुद पढ़ लें; जो बात आपकी नहीं, वह यहाँ नहीं मिलेगी।",
+      tabLetter:"कवर लेटर", tabResume:"रिज़्यूमे", tabInterview:"इंटरव्यू की तैयारी", tabPack:"अप्लाई पैक",
+      btnCopyLetter:"लेटर कॉपी करें", btnPrintLetter:"लेटर प्रिंट करें", btnPrintResume:"प्रिंट करें / PDF सहेजें",
+      btnCopyResume:"रिज़्यूमे का टेक्स्ट कॉपी करें", btnCopyQuestions:"सवाल कॉपी करें", btnCopyPack:"पूरा पैक कॉपी करें",
+      btnWhatsApp:"WhatsApp पर साझा करें", btnPrintPack:"पैक प्रिंट करें",
+      packHLetter:"कवर लेटर", packHResume:"रिज़्यूमे", packHInterview:"इंटरव्यू की तैयारी — 10 संभावित सवाल",
+      footerLine:"<b>JobKaro</b> — Sehrish Creates का एक मुफ़्त टूल। आपकी जानकारी, प्रोफ़ाइल और कुंजी सिर्फ़ आपके ब्राउज़र में रहती है; हमारे पास कोई कॉपी नहीं आती। पत्र भेजने से पहले हमेशा ख़ुद पढ़ लें।",
+      toastLetter:"कवर लेटर कॉपी हो गया",
+      toastResume:"रिज़्यूमे का टेक्स्ट कॉपी हो गया",
+      toastQuestions:"इंटरव्यू के सवाल कॉपी हो गए",
+      toastPack:"पूरा अप्लाई पैक कॉपी हो गया",
+      toastNeedGenerate:"पहले Generate करें — अभी कॉपी करने को कुछ नहीं",
+      toastCopied:"कॉपी हो गया",
+      toastCopyFail:"कॉपी नहीं हो सका — टेक्स्ट चुनकर ख़ुद कॉपी करें",
+      toastPackReady:"अप्लाई पैक तैयार है",
+      interviewEmpty:"सवाल तैयार नहीं हो सके — दोबारा Generate करके देखें।",
+      errName:"पहले चरण 1 में अपना नाम और प्रोफ़ाइल भर दें।",
+      errProfile:"प्रोफ़ाइल में अनुभव या कौशल लिखना ज़रूरी है — जानकारी के बिना पत्र नहीं बन सकता।",
+      errJd:"चरण 2 में नौकरी का पूरा विवरण पेस्ट करें — इतनी कम जानकारी पर ख़ास पत्र नहीं बनेगा।",
+      errKeyMissing:"चरण 3 में अपनी मुफ़्त API कुंजी पेस्ट करें — कुंजी के बिना AI नहीं चल सकता।",
+      progLetter:"कवर लेटर तैयार हो रहा है...",
+      progResume:"रिज़्यूमे तैयार हो रहा है...",
+      progInterview:"इंटरव्यू के सवाल तैयार हो रहे हैं...",
+      stepOf:"चरण {n} / 3 — ",
+      doneStatus:"आपका अप्लाई पैक तैयार है — नीचे तीनों चीज़ें देख लें।",
+      errKey:"API कुंजी ग़लत लगती है — कुंजी दोबारा जाँचकर पेस्ट करें। (Error {status})",
+      errQuota:"आज की मुफ़्त सीमा ख़त्म हो गई लगती है — कुछ देर बाद या कल फिर कोशिश करें। (Error 429)",
+      errServer:"सर्वर ने जवाब नहीं दिया (Error {status}) — थोड़ी देर बाद फिर कोशिश करें।",
+      errEmpty:"AI से ख़ाली जवाब आया — एक बार फिर Generate दबाएँ।",
+      errTimeout:"जवाब आने में बहुत देर लग गई — इंटरनेट जाँचकर फिर कोशिश करें।",
+      errConn:"सर्वर से संपर्क नहीं हो सका — इंटरनेट कनेक्शन जाँचें। अगर इंटरनेट ठीक है तो थोड़ी देर बाद फिर कोशिश करें।",
+      errGeneric:"कुछ ग़लत हो गया — फिर कोशिश करें।"
+    }
+  };
+  var curLang = "en";
+  function t(key){
+    var d = I18N[curLang] || I18N.en;
+    if(d[key] != null) return d[key];
+    if(I18N.en[key] != null) return I18N.en[key];
+    return key;
+  }
 
   /* ---------------- storage ---------------- */
   function lsGet(k){ try{ var v = localStorage.getItem(k); return v ? JSON.parse(v) : null; }catch(e){ return null; } }
@@ -522,15 +847,15 @@
   /* ---------------- toast ---------------- */
   var toastTimer = null;
   function toast(msg){
-    var t = $("toast"); t.textContent = msg; t.classList.add("on");
-    clearTimeout(toastTimer); toastTimer = setTimeout(function(){ t.classList.remove("on"); }, 2600);
+    var tEl = $("toast"); tEl.textContent = msg; tEl.classList.add("on");
+    clearTimeout(toastTimer); toastTimer = setTimeout(function(){ tEl.classList.remove("on"); }, 2600);
   }
   window.toast = toast;
 
-  /* ---------------- clipboard ---------------- */
-  window.copyText = function(text, okMsg){
-    if(!text){ toast("Pehle Generate karein — abhi kuch copy karne ko nahi"); return; }
-    function done(){ toast(okMsg || "Copy ho gaya"); }
+  /* ---------------- clipboard (2nd arg = i18n key for the success toast) ---------------- */
+  window.copyText = function(text, okKey){
+    if(!text){ toast(t("toastNeedGenerate")); return; }
+    function done(){ toast(okKey ? t(okKey) : t("toastCopied")); }
     if(navigator.clipboard && navigator.clipboard.writeText){
       navigator.clipboard.writeText(text).then(done, function(){ fallback(); });
     } else { fallback(); }
@@ -538,7 +863,7 @@
       var ta = document.createElement("textarea");
       ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
       document.body.appendChild(ta); ta.select();
-      try{ document.execCommand("copy"); done(); }catch(e){ toast("Copy nahi ho saka — text select karke khud copy karein"); }
+      try{ document.execCommand("copy"); done(); }catch(e){ toast(t("toastCopyFail")); }
       document.body.removeChild(ta);
     }
   };
@@ -555,22 +880,54 @@
     catch(e){ return ""; }
   }
 
+  /* ---------------- language apply ---------------- */
+  function applyLang(lang){
+    if(!I18N[lang]) lang = "en";
+    curLang = lang;
+    lsSet("jk_lang", lang);
+    document.documentElement.lang = lang;
+    document.documentElement.dir = (lang === "ur") ? "rtl" : "ltr";
+    document.querySelectorAll("[data-i18n]").forEach(function(el){
+      el.textContent = t(el.getAttribute("data-i18n"));
+    });
+    document.querySelectorAll("[data-i18n-html]").forEach(function(el){
+      el.innerHTML = t(el.getAttribute("data-i18n-html"));
+    });
+    document.querySelectorAll("[data-i18n-ph]").forEach(function(el){
+      el.setAttribute("placeholder", t(el.getAttribute("data-i18n-ph")));
+    });
+    document.querySelectorAll(".lang-toggle button").forEach(function(b){
+      b.classList.toggle("on", b.getAttribute("data-lang") === lang);
+    });
+    refreshKeyStatus();
+    refreshKeyToggle();
+    if(!$("btnGenerate").disabled) setStatus(t("genDefault"), false);
+    if($("results").classList.contains("show")) renderResults();
+  }
+  document.querySelectorAll(".lang-toggle button").forEach(function(b){
+    b.addEventListener("click", function(){ applyLang(b.getAttribute("data-lang")); });
+  });
+
   /* ---------------- key field ---------------- */
   var keyInput = $("f_key"), keyStatus = $("keyStatus");
+  var keyVisible = false;
   function refreshKeyStatus(){
     var k = keyInput.value.trim();
-    if(k.length >= 12){ keyStatus.textContent = "Key mehfooz hai — sirf is browser mein save hai."; keyStatus.className = "key-status ok"; }
-    else if(k.length > 0){ keyStatus.textContent = "Key mukammal nahi lagti — poori key paste karein."; keyStatus.className = "key-status bad"; }
+    if(k.length >= 12){ keyStatus.textContent = t("keyOk"); keyStatus.className = "key-status ok"; }
+    else if(k.length > 0){ keyStatus.textContent = t("keyPartial"); keyStatus.className = "key-status bad"; }
     else { keyStatus.textContent = ""; keyStatus.className = "key-status"; }
+  }
+  function refreshKeyToggle(){
+    $("btnKeyToggle").textContent = keyVisible ? t("btnHide") : t("btnShow");
   }
   keyInput.addEventListener("input", function(){ lsSet("jk_key", keyInput.value.trim()); refreshKeyStatus(); });
   $("btnKeyToggle").addEventListener("click", function(){
-    var show = keyInput.type === "password";
-    keyInput.type = show ? "text" : "password";
-    this.textContent = show ? "Hide" : "Show";
+    keyVisible = keyInput.type === "password";
+    keyInput.type = keyVisible ? "text" : "password";
+    refreshKeyToggle();
   });
 
-  /* ---------------- API ---------------- */
+  /* ---------------- API (errors carry an i18n key; resolved at display time) ---------------- */
   function callMercury(prompt){
     var key = keyInput.value.trim();
     var ctrl = ("AbortController" in window) ? new AbortController() : null;
@@ -585,26 +942,33 @@
       if(timer) clearTimeout(timer);
       if(!resp.ok){
         if(resp.status === 401 || resp.status === 403)
-          throw new Error("API key ghalat lagti hai — key dobara check karke paste karein. (Error " + resp.status + ")");
+          throw { jk: "errKey", st: resp.status };
         if(resp.status === 429)
-          throw new Error("Aaj ki muft limit khatam ho gayi lagti hai — kuch der baad ya kal phir koshish karein. (Error 429)");
-        throw new Error("Server ne jawab nahi diya (Error " + resp.status + ") — thori der baad phir koshish karein.");
+          throw { jk: "errQuota", st: 429 };
+        throw { jk: "errServer", st: resp.status };
       }
       return resp.json();
     }).then(function(data){
       var txt = data && data.choices && data.choices[0] && data.choices[0].message
         ? (data.choices[0].message.content || "") : "";
       txt = txt.trim();
-      if(!txt) throw new Error("AI se khaali jawab aya — ek dafa phir Generate dabayein.");
+      if(!txt) throw { jk: "errEmpty" };
       return txt;
     }).catch(function(err){
       if(timer) clearTimeout(timer);
+      if(err && err.jk) throw err;
       if(err && err.name === "AbortError")
-        throw new Error("Jawab aane mein bohat der lag gayi — internet check karke phir koshish karein.");
+        throw { jk: "errTimeout" };
       if(err instanceof TypeError)
-        throw new Error("Server se rabta nahi ho saka — internet connection check karein. Agar internet theek hai to thori der baad phir koshish karein.");
+        throw { jk: "errConn" };
       throw err;
     });
+  }
+  function errText(err){
+    if(err && err.jk){
+      return t(err.jk).replace("{status}", err.st != null ? err.st : "");
+    }
+    return t("errGeneric");
   }
 
   /* ---------------- prompts ---------------- */
@@ -674,7 +1038,7 @@
     return items.slice(0, 10);
   }
 
-  /* ---------------- rendering ---------------- */
+  /* ---------------- rendering (outputs stay English by design) ---------------- */
   function resumeHTML(p){
     var contact = [p.f_city, p.f_phone, p.f_email].filter(Boolean).join(" &nbsp;•&nbsp; ");
     var h = "<h1>" + esc(p.f_name || "Your Name") + "</h1>";
@@ -694,7 +1058,7 @@
     return h;
   }
   function interviewHTML(){
-    if(!state.interview.length) return '<p class="hint">Sawal tayyar nahi ho sake — dobara Generate karke dekhein.</p>';
+    if(!state.interview.length) return '<p class="hint">' + esc(t("interviewEmpty")) + '</p>';
     return state.interview.map(function(it, i){
       return '<div class="qa-item"><div class="q"><span class="n">' + (i+1) + "</span><span>" + esc(it.q) + "</span></div>" +
         (it.h ? '<div class="h"><b>Hint:</b> ' + esc(it.h) + "</div>" : "") + "</div>";
@@ -766,7 +1130,7 @@
   var tabs = document.querySelectorAll(".tab");
   tabs.forEach(function(tab){
     tab.addEventListener("click", function(){
-      tabs.forEach(function(t){ t.classList.remove("active"); });
+      tabs.forEach(function(tb){ tb.classList.remove("active"); });
       document.querySelectorAll(".panel").forEach(function(pn){ pn.classList.remove("active"); });
       tab.classList.add("active");
       $("panel-" + tab.getAttribute("data-tab")).classList.add("active");
@@ -784,36 +1148,36 @@
     var p = readProfile();
     var jd = $("f_jd").value.trim();
     var tone = $("f_tone").value;
-    if(!p.f_name){ setStatus("Pehle Step 1 mein apna naam aur profile bhar dein.", true); $("step-profile").scrollIntoView({behavior:"smooth"}); return; }
-    if(!p.f_exp && !p.f_skills){ setStatus("Profile mein tajurba ya skills likhna zaroori hai — baghair maloomat ke letter nahi ban sakta.", true); $("step-profile").scrollIntoView({behavior:"smooth"}); return; }
-    if(jd.length < 40){ setStatus("Step 2 mein nokri ki mukammal tafseel paste karein — itni kam maloomat par tailored letter nahi bane ga.", true); $("step-job").scrollIntoView({behavior:"smooth"}); return; }
-    if(key.length < 12){ setStatus("Step 3 mein apni muft API key paste karein — baghair key ke AI nahi chal sakta.", true); keyInput.focus(); return; }
+    if(!p.f_name){ setStatus(t("errName"), true); $("step-profile").scrollIntoView({behavior:"smooth"}); return; }
+    if(!p.f_exp && !p.f_skills){ setStatus(t("errProfile"), true); $("step-profile").scrollIntoView({behavior:"smooth"}); return; }
+    if(jd.length < 40){ setStatus(t("errJd"), true); $("step-job").scrollIntoView({behavior:"smooth"}); return; }
+    if(key.length < 12){ setStatus(t("errKeyMissing"), true); keyInput.focus(); return; }
 
     btn.disabled = true;
-    var step = function(n, label){ setStatus('<span class="spinner"></span>Step ' + n + ' of 3 — ' + label, false); };
-    step(1, "Cover letter tayyar ho raha hai...");
+    var step = function(n, labelKey){ setStatus('<span class="spinner"></span>' + t("stepOf").replace("{n}", n) + t(labelKey), false); };
+    step(1, "progLetter");
     callMercury(letterPrompt(p, jd, tone))
       .then(function(letter){
         state.letter = letter;
-        step(2, "Resume tayyar ho raha hai...");
+        step(2, "progResume");
         return callMercury(resumePrompt(p, jd));
       })
       .then(function(resumeTxt){
         var parsed = parseResume(resumeTxt, p);
         state.summary = parsed.summary; state.bullets = parsed.bullets; state.skillsLine = parsed.skillsLine;
-        step(3, "Interview ke sawal tayyar ho rahe hain...");
+        step(3, "progInterview");
         return callMercury(interviewPrompt(p, jd));
       })
       .then(function(intTxt){
         state.interview = parseInterview(intTxt);
         lsSet("jk_results", state);
         renderResults();
-        setStatus("Aap ka Apply Pack tayyar hai — neeche teenon cheezein dekh lein.", false);
-        toast("Apply Pack tayyar hai");
+        setStatus(t("doneStatus"), false);
+        toast(t("toastPackReady"));
         $("results").scrollIntoView({behavior:"smooth"});
       })
       .catch(function(err){
-        setStatus((err && err.message) ? err.message : "Kuch ghalat ho gaya — phir koshish karein.", true);
+        setStatus(errText(err), true);
       })
       .then(function(){ btn.disabled = false; });
   });
@@ -828,6 +1192,7 @@
     refreshKeyStatus();
     var r = lsGet("jk_results");
     if(r && (r.letter || r.summary)) renderResults(r);
+    applyLang(lsGet("jk_lang") || "en");
   })();
 
   /* exposed for QA only — no sample data ships in this file */
