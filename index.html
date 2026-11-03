@@ -169,6 +169,29 @@
   }
   .howstrip b{color:var(--ink-2)}
   .howstrip .arr{color:var(--faint)}
+
+  /* ---------- Mode switcher ---------- */
+  .modes{
+    display:flex;gap:4px;background:#fff;border:1.5px solid var(--line);
+    border-radius:14px;padding:4px;margin-bottom:16px;box-shadow:var(--shadow);
+  }
+  .mode-btn{
+    flex:1;border:none;background:transparent;color:var(--muted);
+    font-size:15px;font-weight:600;padding:12px 10px;border-radius:10px;
+    transition:all .15s ease;line-height:1.3;
+  }
+  .mode-btn:hover{color:var(--ink)}
+  .mode-btn.on{background:var(--ink);color:#fff;box-shadow:0 6px 14px -6px rgba(11,31,58,.5)}
+  .mode-btn small{display:block;font-size:12px;font-weight:500;opacity:.75;margin-top:2px}
+  html[lang="ur"] .mode-btn{line-height:1.9}
+  #results2{display:none}
+  #results2.show{display:block}
+  .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}
+  @media (max-width:760px){
+    .grid3{grid-template-columns:1fr}
+    .mode-btn{font-size:13.5px;padding:10px 6px}
+  }
+
   .step{
     background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
     box-shadow:var(--shadow);padding:30px 32px;margin-bottom:24px;
@@ -380,10 +403,16 @@
 
 <main class="wrap">
 
+  <div class="modes" id="modes" role="group" aria-label="Mode">
+    <button type="button" class="mode-btn on" data-mode="apply"><span data-i18n="modeApply">Apply Pack</span><small data-i18n="modeApplySub">Cover letter + resume</small></button>
+    <button type="button" class="mode-btn" data-mode="upwork"><span data-i18n="modeUpwork">Upwork Proposal</span><small data-i18n="modeUpworkSub">Client ki job, aap ki proposal</small></button>
+    <button type="button" class="mode-btn" data-mode="fiverr"><span data-i18n="modeFiverr">Fiverr Gig</span><small data-i18n="modeFiverrSub">Poora gig page tayyar</small></button>
+  </div>
+
   <div class="howstrip">
-    <span data-i18n-html="how1"><b>1.</b> Profile banao</span><span class="arr">&rarr;</span>
-    <span data-i18n-html="how2"><b>2.</b> Job ki tafseel paste karo</span><span class="arr">&rarr;</span>
-    <span data-i18n-html="how3"><b>3.</b> Apply Pack tayyar</span>
+    <span id="how1"></span><span class="arr">&rarr;</span>
+    <span id="how2"></span><span class="arr">&rarr;</span>
+    <span id="how3"></span>
   </div>
 
   <!-- STEP 1 : PROFILE -->
@@ -457,10 +486,72 @@
     </div>
   </section>
 
+  <!-- STEP 2B : UPWORK JOB POST (Upwork mode) -->
+  <section class="step" id="step-upwork" style="display:none">
+    <div class="step-head">
+      <div class="step-num">2</div>
+      <div>
+        <h2 data-i18n="upTitle">The Upwork job</h2>
+        <p class="step-sub" data-i18n="upSub">Client ki job post yahan paste karein — proposal aap ki Step 1 wali asal profile se hi bane gi, kuch invent nahi hoga.</p>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="field full">
+        <label for="f_upjd"><span data-i18n="lblUpJd">Upwork job post</span><span class="ur" data-i18n="subUpJd">Poora job post yahan paste karein</span></label>
+        <textarea id="f_upjd" rows="7" data-i18n-ph="phUpJd" placeholder="Paste the full Upwork job post here — what the client needs, their problem, budget and requirements."></textarea>
+      </div>
+      <div class="field">
+        <label for="f_uptone"><span data-i18n="lblTone">Letter tone</span><span class="ur" data-i18n="subTone">Application ka lehja</span></label>
+        <select id="f_uptone">
+          <option value="Formal" data-i18n="toneFormal">Formal — classic &amp; respectful</option>
+          <option value="Confident" selected data-i18n="toneConfident">Confident — strong &amp; assured</option>
+          <option value="Fresh Graduate" data-i18n="toneFresh">Fresh Graduate — eager &amp; honest</option>
+        </select>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 1B : FIVERR SERVICE (Fiverr mode) -->
+  <section class="step" id="step-fiverr" style="display:none">
+    <div class="step-head">
+      <div class="step-num">1</div>
+      <div>
+        <h2 data-i18n="fiTitle">Your service</h2>
+        <p class="step-sub" data-i18n="fiSub">Apni service ki tafseel dein — gig page sirf aap ki di hui maloomat se bane ga. Prices sirf wahi ayengi jo aap likhein ge; khaali chhor dein to [Price] placeholder rahe ga.</p>
+      </div>
+    </div>
+    <div class="grid">
+      <div class="field full">
+        <label for="f_service"><span data-i18n="lblService">Service</span><span class="ur" data-i18n="subService">Aap kya service dete hain?</span></label>
+        <input type="text" id="f_service" data-i18n-ph="phService" placeholder="e.g. Logo design for small businesses">
+      </div>
+      <div class="field full">
+        <label for="f_fiskills"><span data-i18n="lblFiSkills">Skills &amp; tools</span><span class="ur" data-i18n="subFiSkills">Maharat aur tools jo istemal karte hain</span></label>
+        <textarea id="f_fiskills" rows="2" data-i18n-ph="phFiSkills" placeholder="e.g. Adobe Illustrator, Photoshop, brand identity design"></textarea>
+      </div>
+      <div class="field full">
+        <label for="f_fiexp"><span data-i18n="lblFiExp">Experience</span><span class="ur" data-i18n="subFiExp">Tajurba — kitna arsa, kis qisam ka kaam. Sirf wohi likhein jo sach hai.</span></label>
+        <textarea id="f_fiexp" rows="3" data-i18n-ph="phFiExp" placeholder="e.g. 3 saal se choti businesses aur online stores ke liye logo aur branding ka kaam kar raha hoon."></textarea>
+      </div>
+      <div class="field">
+        <label for="f_delivery"><span data-i18n="lblDelivery">Delivery time</span><span class="ur" data-i18n="subDelivery">Kaam kitne din mein de dein ge?</span></label>
+        <input type="text" id="f_delivery" data-i18n-ph="phDelivery" placeholder="e.g. Basic 2 days, Standard 3 days, Premium 5 days">
+      </div>
+      <div class="field">
+        <label><span data-i18n="lblPrices">Package prices (optional)</span><span class="ur" data-i18n="subPrices">Qeemat — sirf agar tay hai; khaali chhor dein to [Price] ayega</span></label>
+        <div class="grid3">
+          <input type="text" id="f_price_b" data-i18n-ph="phPriceB" placeholder="Basic — e.g. $10" aria-label="Basic price">
+          <input type="text" id="f_price_s" data-i18n-ph="phPriceS" placeholder="Standard — e.g. $25" aria-label="Standard price">
+          <input type="text" id="f_price_p" data-i18n-ph="phPriceP" placeholder="Premium — e.g. $50" aria-label="Premium price">
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- STEP 3 : KEY + GENERATE -->
   <section class="step" id="step-key">
     <div class="step-head">
-      <div class="step-num">3</div>
+      <div class="step-num" id="keyStepNum">3</div>
       <div>
         <h2 data-i18n="step3Title">Generate your pack</h2>
         <p class="step-sub" data-i18n="step3Sub">JobKaro ek free AI key se chalta hai jo seedha aap ke browser se kaam karti hai — hamara koi server beech mein nahi.</p>
@@ -478,7 +569,7 @@
     <div class="generate-zone" style="margin-top:24px">
       <button class="btn btn-primary" id="btnGenerate">
         <svg viewBox="0 0 24 24"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19 15.5l.8 2.2L22 18.5l-2.2.8L19 21.5l-.8-2.2L16 18.5l2.2-.8z"/></svg>
-        <span data-i18n="btnGenerate">Generate my pack</span>
+        <span id="btnGenerateLabel">Generate my pack</span>
       </button>
       <div class="gen-status" id="genStatus">Letter + Resume + Interview ke 10 sawal — ek click mein tayyar.</div>
     </div>
@@ -541,6 +632,27 @@
     </div>
   </section>
 
+  <!-- RESULTS 2 : UPWORK PROPOSAL / FIVERR GIG -->
+  <section id="results2">
+    <div class="integrity">
+      <svg viewBox="0 0 24 24"><path d="M12 22s8-3.6 8-10V5l-8-3-8 3v7c0 6.4 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+      <p data-i18n="integrity">Every word we produce is built only from what you tell us — nothing invented, nothing padded. Bhejney se pehle ek dafa khud parh lein; jo baat aap ki nahi, wo yahan nahi milegi.</p>
+    </div>
+    <div class="pack-block">
+      <h3 id="res2Title">Your Upwork Proposal</h3>
+      <div class="panel-actions">
+        <button class="btn btn-primary btn-small" onclick="copyRes2()">
+          <svg viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span id="btnCopyRes2Label">Copy proposal</span>
+        </button>
+        <button class="btn btn-whatsapp btn-small" onclick="shareRes2()">
+          <svg viewBox="0 0 24 24"><path d="M21 11.5a8.5 8.5 0 0 1-12.4 7.6L3 21l1.9-5.4A8.5 8.5 0 1 1 21 11.5z"/></svg><span data-i18n="btnWhatsApp">Share on WhatsApp</span>
+        </button>
+        <button class="btn btn-ghost btn-small" onclick="printRes2()"><span data-i18n="btnPrintOut">Print</span></button>
+      </div>
+      <div class="paper" id="outRes2"></div>
+    </div>
+  </section>
+
 </main>
 
 <footer>
@@ -558,6 +670,8 @@
   var MODEL = "mercury-3";
 
   var state = { letter:"", summary:"", bullets:[], skillsLine:"", interview:[] };
+  var state2 = { mode:"", text:"" };
+  var curMode = "apply";
 
   /* ---------------- i18n ----------------
      Interface language only. Generated outputs (letter, resume, interview
@@ -645,7 +759,45 @@
       errEmpty:"AI se khaali jawab aya — ek dafa phir Generate dabayein.",
       errTimeout:"Jawab aane mein bohat der lag gayi — internet check karke phir koshish karein.",
       errConn:"Server se rabta nahi ho saka — internet connection check karein. Agar internet theek hai to thori der baad phir koshish karein.",
-      errGeneric:"Kuch ghalat ho gaya — phir koshish karein."
+      errGeneric:"Kuch ghalat ho gaya — phir koshish karein.",
+      modeApply:"Apply Pack", modeApplySub:"Cover letter + resume",
+      modeUpwork:"Upwork Proposal", modeUpworkSub:"Client ki job, aap ki proposal",
+      modeFiverr:"Fiverr Gig", modeFiverrSub:"Poora gig page tayyar",
+      howUp1:"<b>1.</b> Profile banao",
+      howUp2:"<b>2.</b> Upwork job post paste karo",
+      howUp3:"<b>3.</b> Proposal tayyar",
+      howFi1:"<b>1.</b> Apni service batao",
+      howFi2:"<b>2.</b> Gig ki tafseel tayyar",
+      howFi3:"<b>3.</b> Copy karke Fiverr par lagao",
+      upTitle:"The Upwork job",
+      upSub:"Client ki job post yahan paste karein — proposal aap ki Step 1 wali asal profile se hi bane gi, kuch invent nahi hoga.",
+      lblUpJd:"Upwork job post", subUpJd:"Poora job post yahan paste karein",
+      phUpJd:"Paste the full Upwork job post here — what the client needs, their problem, budget and requirements.",
+      fiTitle:"Your service",
+      fiSub:"Apni service ki tafseel dein — gig page sirf aap ki di hui maloomat se bane ga. Prices sirf wahi ayengi jo aap likhein ge; khaali chhor dein to [Price] placeholder rahe ga.",
+      lblService:"Service", subService:"Aap kya service dete hain?", phService:"e.g. Logo design for small businesses",
+      lblFiSkills:"Skills & tools", subFiSkills:"Maharat aur tools jo istemal karte hain",
+      phFiSkills:"e.g. Adobe Illustrator, Photoshop, brand identity design",
+      lblFiExp:"Experience", subFiExp:"Tajurba — kitna arsa, kis qisam ka kaam. Sirf wohi likhein jo sach hai.",
+      phFiExp:"e.g. 3 saal se choti businesses aur online stores ke liye logo aur branding ka kaam kar raha hoon.",
+      lblDelivery:"Delivery time", subDelivery:"Kaam kitne din mein de dein ge?",
+      phDelivery:"e.g. Basic 2 days, Standard 3 days, Premium 5 days",
+      lblPrices:"Package prices (optional)", subPrices:"Qeemat — sirf agar tay hai; khaali chhor dein to [Price] ayega",
+      phPriceB:"Basic — e.g. $10", phPriceS:"Standard — e.g. $25", phPriceP:"Premium — e.g. $50",
+      btnGenerateProposal:"Generate my proposal", btnGenerateGig:"Create my gig",
+      genDefaultUp:"Proposal aap ki profile aur client ki job post se tayyar hoga.",
+      genDefaultFi:"3 titles + poori description + 3 packages + 5 FAQs — ek click mein tayyar.",
+      progProposal:"Proposal tayyar ho raha hai...",
+      progGig:"Gig page tayyar ho raha hai...",
+      doneProposal:"Aap ka proposal tayyar hai — neeche copy karke Upwork par paste kar dein.",
+      doneGig:"Aap ka gig pack tayyar hai — neeche copy karke Fiverr par lagayein.",
+      res2ProposalH:"Your Upwork Proposal", res2GigH:"Your Fiverr Gig Pack",
+      btnCopyProposal:"Copy proposal", btnCopyGig:"Copy gig pack", btnPrintOut:"Print",
+      toastProposal:"Proposal copy ho gaya", toastGig:"Gig pack copy ho gaya",
+      toastProposalReady:"Proposal tayyar hai", toastGigReady:"Gig pack tayyar hai",
+      errUpJd:"Pehle Upwork ki poori job post paste karein — baghair post ke tailored proposal nahi bane ga.",
+      errFiService:"Pehle apni service likhein — gig kis cheez ka hai, ye zaroori hai.",
+      errFiSkills:"Skills likhna zaroori hai — gig unhi maharat par bane ga."
     },
     ur: {
       brandSub:"اعتماد کے ساتھ اپلائی کریں",
@@ -729,7 +881,45 @@
       errEmpty:"AI سے خالی جواب آیا — ایک بار پھر Generate دبائیں۔",
       errTimeout:"جواب آنے میں بہت دیر لگ گئی — انٹرنیٹ جانچ کر پھر کوشش کریں۔",
       errConn:"سرور سے رابطہ نہیں ہو سکا — انٹرنیٹ کنکشن جانچیں۔ اگر انٹرنیٹ ٹھیک ہے تو تھوڑی دیر بعد پھر کوشش کریں۔",
-      errGeneric:"کچھ غلط ہو گیا — پھر کوشش کریں۔"
+      errGeneric:"کچھ غلط ہو گیا — پھر کوشش کریں۔",
+      modeApply:"اپلائی پیک", modeApplySub:"کور لیٹر + ریزیومے",
+      modeUpwork:"اپ ورک پروپوزل", modeUpworkSub:"کلائنٹ کی نوکری، آپ کی پروپوزل",
+      modeFiverr:"فائیور گگ", modeFiverrSub:"پورا گگ پیج تیار",
+      howUp1:"<b>1۔</b> پروفائل بنائیں",
+      howUp2:"<b>2۔</b> اپ ورک جاب پوسٹ پیسٹ کریں",
+      howUp3:"<b>3۔</b> پروپوزل تیار",
+      howFi1:"<b>1۔</b> اپنی سروس بتائیں",
+      howFi2:"<b>2۔</b> گگ کی تفصیل تیار",
+      howFi3:"<b>3۔</b> کاپی کر کے فائیور پر لگائیں",
+      upTitle:"اپ ورک کی نوکری",
+      upSub:"کلائنٹ کی جاب پوسٹ یہاں پیسٹ کریں — پروپوزل آپ کی مرحلہ 1 والی اصل پروفائل سے ہی بنے گی، کچھ ایجاد نہیں ہوگا۔",
+      lblUpJd:"اپ ورک جاب پوسٹ", subUpJd:"پوری جاب پوسٹ یہاں پیسٹ کریں",
+      phUpJd:"مکمل اپ ورک جاب پوسٹ یہاں پیسٹ کریں — کلائنٹ کو کیا چاہیے، ان کا مسئلہ، بجٹ اور شرائط۔",
+      fiTitle:"آپ کی سروس",
+      fiSub:"اپنی سروس کی تفصیل دیں — گگ پیج صرف آپ کی دی ہوئی معلومات سے بنے گا۔ قیمتیں صرف وہی آئیں گی جو آپ لکھیں گے؛ خالی چھوڑ دیں تو [Price] پلیس ہولڈر رہے گا۔",
+      lblService:"سروس", subService:"آپ کیا سروس دیتے ہیں؟", phService:"مثلاً چھوٹے کاروباروں کے لیے لوگو ڈیزائن",
+      lblFiSkills:"مہارت اور ٹولز", subFiSkills:"مہارت اور ٹولز جو استعمال کرتے ہیں",
+      phFiSkills:"مثلاً ایڈوب السٹریٹر، فوٹوشاپ، برانڈ آئیڈینٹٹی ڈیزائن",
+      lblFiExp:"تجربہ", subFiExp:"تجربہ — کتنا عرصہ، کس قسم کا کام۔ صرف وہی لکھیں جو سچ ہے۔",
+      phFiExp:"مثلاً 3 سال سے چھوٹے کاروباروں اور آن لائن اسٹورز کے لیے لوگو اور برانڈنگ کا کام کر رہا ہوں۔",
+      lblDelivery:"ڈیلیوری کا وقت", subDelivery:"کام کتنے دن میں دے دیں گے؟",
+      phDelivery:"مثلاً بیسک 2 دن، اسٹینڈرڈ 3 دن، پریمیم 5 دن",
+      lblPrices:"پیکیج قیمتیں (اختیاری)", subPrices:"قیمت — صرف اگر طے ہے؛ خالی چھوڑ دیں تو [Price] آئے گا",
+      phPriceB:"بیسک — مثلاً $10", phPriceS:"اسٹینڈرڈ — مثلاً $25", phPriceP:"پریمیم — مثلاً $50",
+      btnGenerateProposal:"میری پروپوزل بنائیں", btnGenerateGig:"میری گگ بنائیں",
+      genDefaultUp:"پروپوزل آپ کی پروفائل اور کلائنٹ کی جاب پوسٹ سے تیار ہوگا۔",
+      genDefaultFi:"3 عنوانات + مکمل تفصیل + 3 پیکیجز + 5 سوالات — ایک کلک میں تیار۔",
+      progProposal:"پروپوزل تیار ہو رہی ہے...",
+      progGig:"گگ پیج تیار ہو رہا ہے...",
+      doneProposal:"آپ کی پروپوزل تیار ہے — نیچے سے کاپی کر کے اپ ورک پر پیسٹ کر دیں۔",
+      doneGig:"آپ کا گگ پیک تیار ہے — نیچے سے کاپی کر کے فائیور پر لگائیں۔",
+      res2ProposalH:"آپ کی اپ ورک پروپوزل", res2GigH:"آپ کا فائیور گگ پیک",
+      btnCopyProposal:"پروپوزل کاپی کریں", btnCopyGig:"گگ پیک کاپی کریں", btnPrintOut:"پرنٹ کریں",
+      toastProposal:"پروپوزل کاپی ہو گئی", toastGig:"گگ پیک کاپی ہو گیا",
+      toastProposalReady:"پروپوزل تیار ہے", toastGigReady:"گگ پیک تیار ہے",
+      errUpJd:"پہلے اپ ورک کی پوری جاب پوسٹ پیسٹ کریں — پوسٹ کے بغیر مخصوص پروپوزل نہیں بنے گی۔",
+      errFiService:"پہلے اپنی سروس لکھیں — گگ کس چیز کا ہے، یہ ضروری ہے۔",
+      errFiSkills:"مہارت لکھنا ضروری ہے — گگ انہی مہارتوں پر بنے گا۔"
     },
     hi: {
       brandSub:"आत्मविश्वास के साथ आवेदन करें",
@@ -813,7 +1003,45 @@
       errEmpty:"AI से ख़ाली जवाब आया — एक बार फिर Generate दबाएँ।",
       errTimeout:"जवाब आने में बहुत देर लग गई — इंटरनेट जाँचकर फिर कोशिश करें।",
       errConn:"सर्वर से संपर्क नहीं हो सका — इंटरनेट कनेक्शन जाँचें। अगर इंटरनेट ठीक है तो थोड़ी देर बाद फिर कोशिश करें।",
-      errGeneric:"कुछ ग़लत हो गया — फिर कोशिश करें।"
+      errGeneric:"कुछ ग़लत हो गया — फिर कोशिश करें।",
+      modeApply:"अप्लाई पैक", modeApplySub:"कवर लेटर + रिज़्यूमे",
+      modeUpwork:"Upwork प्रपोज़ल", modeUpworkSub:"क्लाइंट की नौकरी, आपकी प्रपोज़ल",
+      modeFiverr:"Fiverr गिग", modeFiverrSub:"पूरा गिग पेज तैयार",
+      howUp1:"<b>1.</b> प्रोफ़ाइल बनाएँ",
+      howUp2:"<b>2.</b> Upwork जॉब पोस्ट पेस्ट करें",
+      howUp3:"<b>3.</b> प्रपोज़ल तैयार",
+      howFi1:"<b>1.</b> अपनी सेवा बताएँ",
+      howFi2:"<b>2.</b> गिग का विवरण तैयार",
+      howFi3:"<b>3.</b> कॉपी करके Fiverr पर लगाएँ",
+      upTitle:"Upwork की नौकरी",
+      upSub:"क्लाइंट की जॉब पोस्ट यहाँ पेस्ट करें — प्रपोज़ल आपकी चरण 1 वाली असली प्रोफ़ाइल से ही बनेगी, कुछ गढ़ा नहीं जाएगा।",
+      lblUpJd:"Upwork जॉब पोस्ट", subUpJd:"पूरी जॉब पोस्ट यहाँ पेस्ट करें",
+      phUpJd:"पूरी Upwork जॉब पोस्ट यहाँ पेस्ट करें — क्लाइंट को क्या चाहिए, उनकी समस्या, बजट और शर्तें।",
+      fiTitle:"आपकी सेवा",
+      fiSub:"अपनी सेवा का विवरण दें — गिग पेज सिर्फ़ आपकी दी जानकारी से बनेगा। कीमतें सिर्फ़ वही आएँगी जो आप लिखेंगे; खाली छोड़ दें तो [Price] प्लेसहोल्डर रहेगा।",
+      lblService:"सेवा", subService:"आप क्या सेवा देते हैं?", phService:"जैसे छोटे व्यवसायों के लिए लोगो डिज़ाइन",
+      lblFiSkills:"कौशल और टूल्स", subFiSkills:"कौशल और टूल्स जो इस्तेमाल करते हैं",
+      phFiSkills:"जैसे Adobe Illustrator, Photoshop, ब्रांड आइडेंटिटी डिज़ाइन",
+      lblFiExp:"अनुभव", subFiExp:"अनुभव — कितना समय, किस तरह का काम। सिर्फ़ वही लिखें जो सच है।",
+      phFiExp:"जैसे 3 साल से छोटे व्यवसायों और ऑनलाइन स्टोर्स के लिए लोगो और ब्रांडिंग का काम कर रहा हूँ।",
+      lblDelivery:"डिलीवरी का समय", subDelivery:"काम कितने दिन में दे देंगे?",
+      phDelivery:"जैसे बेसिक 2 दिन, स्टैंडर्ड 3 दिन, प्रीमियम 5 दिन",
+      lblPrices:"पैकेज कीमतें (वैकल्पिक)", subPrices:"कीमत — सिर्फ़ अगर तय है; खाली छोड़ दें तो [Price] आएगा",
+      phPriceB:"बेसिक — जैसे $10", phPriceS:"स्टैंडर्ड — जैसे $25", phPriceP:"प्रीमियम — जैसे $50",
+      btnGenerateProposal:"मेरी प्रपोज़ल बनाएँ", btnGenerateGig:"मेरी गिग बनाएँ",
+      genDefaultUp:"प्रपोज़ल आपकी प्रोफ़ाइल और क्लाइंट की जॉब पोस्ट से तैयार होगी।",
+      genDefaultFi:"3 शीर्षक + पूरा विवरण + 3 पैकेज + 5 सवाल — एक क्लिक में तैयार।",
+      progProposal:"प्रपोज़ल तैयार हो रही है...",
+      progGig:"गिग पेज तैयार हो रहा है...",
+      doneProposal:"आपकी प्रपوزल तैयार है — नीचे से कॉपी करके Upwork पर पेस्ट कर दें।",
+      doneGig:"आपका गिग पैक तैयार है — नीचे से कॉपी करके Fiverr पर लगाएँ।",
+      res2ProposalH:"आपकी Upwork प्रपोज़ल", res2GigH:"आपका Fiverr गिग पैक",
+      btnCopyProposal:"प्रपोज़ल कॉपी करें", btnCopyGig:"गिग पैक कॉपी करें", btnPrintOut:"प्रिंट करें",
+      toastProposal:"प्रपोज़ल कॉपी हो गई", toastGig:"गिग पैक कॉपी हो गया",
+      toastProposalReady:"प्रपोज़ल तैयार है", toastGigReady:"गिग पैक तैयार है",
+      errUpJd:"पहले Upwork की पूरी जॉब पोस्ट पेस्ट करें — पोस्ट के बिना ख़ास प्रपोज़ल नहीं बनेगी।",
+      errFiService:"पहले अपनी सेवा लिखें — गिग किस चीज़ की है, यह ज़रूरी है।",
+      errFiSkills:"कौशल लिखना ज़रूरी है — गिग उन्हीं कौशलों पर बनेगी।"
     }
   };
   var curLang = "en";
@@ -843,6 +1071,17 @@
   PROFILE_FIELDS.forEach(function(id){ $(id).addEventListener("input", saveProfile); });
   $("f_jd").addEventListener("input", function(){ lsSet("jk_jd", $("f_jd").value); });
   $("f_tone").addEventListener("change", function(){ lsSet("jk_tone", $("f_tone").value); });
+  $("f_upjd").addEventListener("input", function(){ lsSet("jk_upjd", $("f_upjd").value); });
+  $("f_uptone").addEventListener("change", function(){ lsSet("jk_uptone", $("f_uptone").value); });
+  var FIVERR_FIELDS = ["f_service","f_fiskills","f_fiexp","f_delivery","f_price_b","f_price_s","f_price_p"];
+  function readFiverr(){
+    var f = {};
+    FIVERR_FIELDS.forEach(function(id){ f[id] = $(id).value.trim(); });
+    return f;
+  }
+  FIVERR_FIELDS.forEach(function(id){
+    $(id).addEventListener("input", function(){ lsSet("jk_fiverr", readFiverr()); });
+  });
 
   /* ---------------- toast ---------------- */
   var toastTimer = null;
@@ -901,8 +1140,8 @@
     });
     refreshKeyStatus();
     refreshKeyToggle();
-    if(!$("btnGenerate").disabled) setStatus(t("genDefault"), false);
-    if($("results").classList.contains("show")) renderResults();
+    setMode(curMode);
+    refreshRes2Labels();
   }
   document.querySelectorAll(".lang-toggle button").forEach(function(b){
     b.addEventListener("click", function(){ applyLang(b.getAttribute("data-lang")); });
@@ -1004,6 +1243,50 @@
       "SKILLS:\n<one line: the applicant's skills cleaned into a comma-separated professional list — do NOT add any skill not present in the profile>\n\n" +
       profileBlock(p) + "\n\nJOB DESCRIPTION:\n" + jd;
   }
+  function upworkPrompt(p, jd, tone){
+    var toneGuide = {
+      "Formal": "classic, respectful and measured",
+      "Confident": "strong and assured with an active voice, while staying polite",
+      "Fresh Graduate": "eager and honest, emphasising willingness to learn and any real coursework or traits the profile mentions"
+    }[tone] || "formal and professional";
+    return "You are an expert Upwork proposal writer for Pakistani freelancers.\n" + INTEGRITY + "\n" +
+      "Write a tailored Upwork proposal in professional English for the job post below. Tone: " + tone + " (" + toneGuide + ").\n" +
+      "Structure:\n" +
+      "1) A hook opening line that speaks directly to the client's actual problem or goal as stated in their post — not a generic greeting.\n" +
+      "2) One or two short lines introducing the applicant using ONLY facts from their profile.\n" +
+      "3) Two or three short proof points drawn ONLY from the applicant's real experience and skills, each matched to something the client asked for.\n" +
+      "4) A low-risk first step offer (for example a small paid trial task or a small first milestone) that lets the client start safely.\n" +
+      "5) A clean sign-off with the applicant's full name.\n" +
+      "Under 250 words, short paragraphs, no hype and no claim the profile does not support. Output ONLY the proposal.\n\n" +
+      profileBlock(p) + "\n\nUPWORK JOB POST:\n" + jd;
+  }
+  function fiverrPrompt(f){
+    return "You are an expert Fiverr gig writer.\n" + INTEGRITY + "\n" +
+      "Create a complete Fiverr gig page from the seller's details below. Use ONLY these facts — never invent ratings, reviews, completed orders, client names or results. Where a price was not given, write [Price].\n" +
+      "Reply in EXACTLY this format and nothing else:\n" +
+      "TITLES:\n" +
+      "1. <gig title — keyword-rich and natural, maximum 70 characters, Fiverr 'I will' style>\n" +
+      "2. <second title option with a different angle, maximum 70 characters>\n" +
+      "3. <third title option with a different angle, maximum 70 characters>\n" +
+      "DESCRIPTION:\n" +
+      "<a persuasive gig description of 150-220 words in professional English: who it is for, what the buyer gets, how the work is done, and why this seller — using only the facts given>\n" +
+      "PACKAGES:\n" +
+      "Basic — <price or [Price]> — <what is included; delivery time>\n" +
+      "Standard — <price or [Price]> — <everything in Basic plus more; delivery time>\n" +
+      "Premium — <price or [Price]> — <everything in Standard plus more; delivery time>\n" +
+      "Use the seller's delivery time where it fits; if one delivery time is given, apply it sensibly across the packages.\n" +
+      "FAQS:\n" +
+      "Q: <a question a buyer would ask> A: <a short, honest answer from the facts>\n" +
+      "(exactly 5 FAQs, one per line, in that same format)\n\n" +
+      "SELLER DETAILS:\n" +
+      "Service: " + (f.f_service || "Not specified") + "\n" +
+      "Skills and tools: " + (f.f_fiskills || "Not specified") + "\n" +
+      "Experience: " + (f.f_fiexp || "Not specified") + "\n" +
+      "Delivery time: " + (f.f_delivery || "Not specified") + "\n" +
+      "Basic price: " + (f.f_price_b || "not given — write [Price]") + "\n" +
+      "Standard price: " + (f.f_price_s || "not given — write [Price]") + "\n" +
+      "Premium price: " + (f.f_price_p || "not given — write [Price]");
+  }
   function interviewPrompt(p, jd){
     return "You are an experienced interview coach in Pakistan.\n" + INTEGRITY + "\n" +
       "Based on the job description below, list the 10 most likely interview questions for this applicant. Reply with EXACTLY 10 lines and nothing else, each line in this exact format:\n" +
@@ -1081,6 +1364,31 @@
   }
   window.renderResults = renderResults;
 
+  /* ---------------- results 2 : proposal / gig ---------------- */
+  function refreshRes2Labels(){
+    if(!state2.mode) return;
+    $("res2Title").textContent = t(state2.mode === "upwork" ? "res2ProposalH" : "res2GigH");
+    $("btnCopyRes2Label").textContent = t(state2.mode === "upwork" ? "btnCopyProposal" : "btnCopyGig");
+  }
+  function renderResults2(){
+    if(!state2.text) return;
+    refreshRes2Labels();
+    $("outRes2").textContent = state2.text;
+    $("results2").classList.add("show");
+  }
+  window.copyRes2 = function(){
+    copyText(state2.text, state2.mode === "upwork" ? "toastProposal" : "toastGig");
+  };
+  window.shareRes2 = function(){
+    var text = state2.text || "";
+    var MAX = 3800;
+    if(text.length > MAX) text = text.slice(0, MAX) + "\n\n(Baqi hissa JobKaro mein dekhein)";
+    window.open("https://wa.me/?text=" + encodeURIComponent(text), "_blank");
+  };
+  window.printRes2 = function(){
+    doPrint("<h2>" + esc($("res2Title").textContent) + '</h2><div class="paper">' + esc(state2.text) + "</div>");
+  };
+
   /* plain-text versions */
   window.resumeText = function(){
     var p = readProfile(), lines = [];
@@ -1143,15 +1451,52 @@
     status.innerHTML = html;
     status.className = "gen-status" + (isErr ? " err" : "");
   }
-  btn.addEventListener("click", function(){
-    var key = keyInput.value.trim();
-    var p = readProfile();
+  /* ---------------- modes ---------------- */
+  var MODE_HOW = {
+    apply: ["how1","how2","how3"],
+    upwork: ["howUp1","howUp2","howUp3"],
+    fiverr: ["howFi1","howFi2","howFi3"]
+  };
+  var MODE_GEN = { apply: "btnGenerate", upwork: "btnGenerateProposal", fiverr: "btnGenerateGig" };
+  var MODE_DEF = { apply: "genDefault", upwork: "genDefaultUp", fiverr: "genDefaultFi" };
+  function setMode(mode){
+    if(!MODE_HOW[mode]) mode = "apply";
+    curMode = mode;
+    lsSet("jk_mode", mode);
+    document.querySelectorAll(".mode-btn").forEach(function(b){
+      b.classList.toggle("on", b.getAttribute("data-mode") === mode);
+    });
+    $("step-profile").style.display = (mode === "fiverr") ? "none" : "";
+    $("step-job").style.display = (mode === "apply") ? "" : "none";
+    $("step-upwork").style.display = (mode === "upwork") ? "" : "none";
+    $("step-fiverr").style.display = (mode === "fiverr") ? "" : "none";
+    $("keyStepNum").textContent = (mode === "fiverr") ? "2" : "3";
+    var hk = MODE_HOW[mode];
+    $("how1").innerHTML = t(hk[0]);
+    $("how2").innerHTML = t(hk[1]);
+    $("how3").innerHTML = t(hk[2]);
+    $("btnGenerateLabel").textContent = t(MODE_GEN[mode]);
+    if(mode === "apply"){
+      $("results2").classList.remove("show");
+      if(state.letter || state.summary) $("results").classList.add("show");
+      else $("results").classList.remove("show");
+    } else {
+      $("results").classList.remove("show");
+      if(state2.mode === mode && state2.text) $("results2").classList.add("show");
+      else $("results2").classList.remove("show");
+    }
+    if(!$("btnGenerate").disabled) setStatus(t(MODE_DEF[mode]), false);
+  }
+  document.querySelectorAll(".mode-btn").forEach(function(b){
+    b.addEventListener("click", function(){ setMode(b.getAttribute("data-mode")); });
+  });
+
+  function generateApply(p){
     var jd = $("f_jd").value.trim();
     var tone = $("f_tone").value;
     if(!p.f_name){ setStatus(t("errName"), true); $("step-profile").scrollIntoView({behavior:"smooth"}); return; }
     if(!p.f_exp && !p.f_skills){ setStatus(t("errProfile"), true); $("step-profile").scrollIntoView({behavior:"smooth"}); return; }
     if(jd.length < 40){ setStatus(t("errJd"), true); $("step-job").scrollIntoView({behavior:"smooth"}); return; }
-    if(key.length < 12){ setStatus(t("errKeyMissing"), true); keyInput.focus(); return; }
 
     btn.disabled = true;
     var step = function(n, labelKey){ setStatus('<span class="spinner"></span>' + t("stepOf").replace("{n}", n) + t(labelKey), false); };
@@ -1180,6 +1525,58 @@
         setStatus(errText(err), true);
       })
       .then(function(){ btn.disabled = false; });
+  }
+  function generateProposal(p){
+    var jd = $("f_upjd").value.trim();
+    var tone = $("f_uptone").value;
+    if(!p.f_name){ setStatus(t("errName"), true); $("step-profile").scrollIntoView({behavior:"smooth"}); return; }
+    if(!p.f_exp && !p.f_skills){ setStatus(t("errProfile"), true); $("step-profile").scrollIntoView({behavior:"smooth"}); return; }
+    if(jd.length < 40){ setStatus(t("errUpJd"), true); $("step-upwork").scrollIntoView({behavior:"smooth"}); return; }
+
+    btn.disabled = true;
+    setStatus('<span class="spinner"></span>' + t("progProposal"), false);
+    callMercury(upworkPrompt(p, jd, tone))
+      .then(function(txt){
+        state2 = { mode: "upwork", text: txt };
+        lsSet("jk_results2", state2);
+        renderResults2();
+        setStatus(t("doneProposal"), false);
+        toast(t("toastProposalReady"));
+        $("results2").scrollIntoView({behavior:"smooth"});
+      })
+      .catch(function(err){
+        setStatus(errText(err), true);
+      })
+      .then(function(){ btn.disabled = false; });
+  }
+  function generateGig(){
+    var f = readFiverr();
+    if(!f.f_service){ setStatus(t("errFiService"), true); $("step-fiverr").scrollIntoView({behavior:"smooth"}); return; }
+    if(!f.f_fiskills){ setStatus(t("errFiSkills"), true); $("step-fiverr").scrollIntoView({behavior:"smooth"}); return; }
+
+    btn.disabled = true;
+    setStatus('<span class="spinner"></span>' + t("progGig"), false);
+    callMercury(fiverrPrompt(f))
+      .then(function(txt){
+        state2 = { mode: "fiverr", text: txt };
+        lsSet("jk_results2", state2);
+        renderResults2();
+        setStatus(t("doneGig"), false);
+        toast(t("toastGigReady"));
+        $("results2").scrollIntoView({behavior:"smooth"});
+      })
+      .catch(function(err){
+        setStatus(errText(err), true);
+      })
+      .then(function(){ btn.disabled = false; });
+  }
+  btn.addEventListener("click", function(){
+    var key = keyInput.value.trim();
+    if(key.length < 12){ setStatus(t("errKeyMissing"), true); keyInput.focus(); return; }
+    var p = readProfile();
+    if(curMode === "upwork") generateProposal(p);
+    else if(curMode === "fiverr") generateGig();
+    else generateApply(p);
   });
 
   /* ---------------- init ---------------- */
@@ -1188,15 +1585,22 @@
     if(p) PROFILE_FIELDS.forEach(function(id){ if(p[id] != null && $(id)) $(id).value = p[id]; });
     var jd = lsGet("jk_jd"); if(jd) $("f_jd").value = jd;
     var tone = lsGet("jk_tone"); if(tone) $("f_tone").value = tone;
+    var upjd = lsGet("jk_upjd"); if(upjd) $("f_upjd").value = upjd;
+    var uptone = lsGet("jk_uptone"); if(uptone) $("f_uptone").value = uptone;
+    var fv = lsGet("jk_fiverr");
+    if(fv) FIVERR_FIELDS.forEach(function(id){ if(fv[id] != null && $(id)) $(id).value = fv[id]; });
     var k = lsGet("jk_key"); if(k){ keyInput.value = k; }
     refreshKeyStatus();
     var r = lsGet("jk_results");
     if(r && (r.letter || r.summary)) renderResults(r);
+    var r2 = lsGet("jk_results2");
+    if(r2 && r2.text){ state2 = r2; renderResults2(); }
     applyLang(lsGet("jk_lang") || "en");
+    setMode(lsGet("jk_mode") || "apply");
   })();
 
   /* exposed for QA only — no sample data ships in this file */
-  window.JobKaro = { state: state, renderResults: renderResults };
+  window.JobKaro = { state: state, state2: function(){ return state2; }, mode: function(){ return curMode; }, setMode: setMode, renderResults: renderResults };
 })();
 </script>
 </body>
